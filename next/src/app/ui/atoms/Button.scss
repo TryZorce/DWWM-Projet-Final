@@ -1,0 +1,72 @@
+@import '../../theme/variables';
+
+.button {
+  width: max-content;
+  min-width: max-content;
+  border-radius: 50px !important;
+  display: flex;
+  gap: 10px;
+
+  &.button--primary {
+    &.button--invisible {
+      background-color: $transparent;
+      color: $primary;
+      border-radius: 0 !important;
+      border: unset;
+
+      .icon {
+        path {
+          stroke: $primary !important;
+        }
+      }
+    }
+  }
+
+  &.button--secondary {
+    background: $secondary;
+    border-color: $secondary;
+
+    &:hover {
+      background: $secondary_dark;
+      border-color: $secondary_dark;
+    }
+
+    &:active {
+      background: $secondary_darker;
+      border-color: $secondary_darker;
+    }
+
+    &:focus {
+      box-shadow:
+        0 0 0 2px #fff,
+        0 0 0 4px $secondary_focus,
+        0 1px 2px 0 #000;
+    }
+
+    &.button--invisible {
+      background-color: $transparent !important;
+      color: $secondary;
+      border-radius: 0;
+      border: unset;
+
+      .icon {
+        path {
+          stroke: $secondary !important;
+        }
+      }
+    }
+  }
+
+  &.p-button-text {
+    border-radius: unset;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+
+    path {
+      stroke: $white !important;
+    }
+  }
+}
