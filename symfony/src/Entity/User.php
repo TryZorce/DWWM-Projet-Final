@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert; // Import de l'annotation Assert
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -19,6 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotNull] // Contrainte pour éviter la valeur null dans la colonne 'uuid'
     private ?string $uuid = null;
 
     #[ORM\Column]
@@ -71,23 +73,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->uuid;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -100,9 +93,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -115,13 +105,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Si vous stockez des données temporaires sensibles, effacez-les ici
     }
 
     public function getName(): ?string
@@ -172,9 +158,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Message>
-     */
     public function getMessageId(): Collection
     {
         return $this->message_id;
@@ -193,7 +176,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeMessageId(Message $messageId): static
     {
         if ($this->message_id->removeElement($messageId)) {
-            // set the owning side to null (unless already changed)
             if ($messageId->getUserId() === $this) {
                 $messageId->setUserId(null);
             }
@@ -202,9 +184,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Cart>
-     */
     public function getCartId(): Collection
     {
         return $this->cart_id;
@@ -223,7 +202,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCartId(Cart $cartId): static
     {
         if ($this->cart_id->removeElement($cartId)) {
-            // set the owning side to null (unless already changed)
             if ($cartId->getUser() === $this) {
                 $cartId->setUser(null);
             }
