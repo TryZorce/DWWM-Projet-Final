@@ -1,26 +1,43 @@
 <?php
-
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\AbstractFixtures;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Promotion;
-use Faker\Factory;
 
-class PromotionFixtures extends Fixture
+class PromotionFixtures extends AbstractFixtures
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create();
+        $promotionData = [
+            [
+                'PromotionName' => 'Promo 1',
+                'code' => 'PROMO123',
+                'Reduction' => 10.0,
+                'percentage' => true,
+                'EndDate' => new \DateTime('2023-12-31'),
+                'StartDate' => new \DateTime('2023-01-01'),
+            ],
+            [
+                'PromotionName' => 'Promo 2',
+                'code' => 'DISCOUNT456',
+                'Reduction' => 5.0,
+                'percentage' => false,
+                'EndDate' => new \DateTime('2023-06-30'),
+                'StartDate' => new \DateTime('2023-03-01'),
+            ],
+            // Ajoutez d'autres promotions ici
+        ];
 
-        for ($i = 1; $i <= 5; $i++) {
+        foreach ($promotionData as $data) {
             $promotion = new Promotion();
-            $promotion->setPromotionname($faker->word);
-            $promotion->setCode($faker->word);
-            $promotion->setReduction($faker->randomFloat(2, 1, 50));
-            $promotion->setPercentage($faker->numberBetween(1, 50));
-            $promotion->setStartdate($faker->dateTimeThisDecade);
-            $promotion->setEnddate($faker->dateTimeThisDecade);
+            $promotion->setPromotionName($data['PromotionName']);
+            $promotion->setCode($data['code']);
+            $promotion->setReduction($data['Reduction']);
+            $promotion->setPercentage($data['percentage']);
+            $promotion->setEndDate($data['EndDate']);
+            $promotion->setStartDate($data['StartDate']);
+
             $manager->persist($promotion);
         }
 

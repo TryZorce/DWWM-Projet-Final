@@ -1,26 +1,37 @@
 <?php
-
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\AbstractFixtures;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Message;
-use App\Entity\User;
-use Faker\Factory;
 
-class MessageFixtures extends Fixture
+class MessageFixtures extends AbstractFixtures
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create();
-        $users = $manager->getRepository(User::class)->findAll();
+        $messageData = [
+            [
+                'MessageContent' => 'Contenu du message 1',
+                'DateTimeSent' => new \DateTime('2023-01-15 10:00:00'),
+                'Attachment' => 'attachment1.txt',
+                'Title' => 'Message 1',
+            ],
+            [
+                'MessageContent' => 'Contenu du message 2',
+                'DateTimeSent' => new \DateTime('2023-02-20 15:30:00'),
+                'Attachment' => 'attachment2.jpg',
+                'Title' => 'Message 2',
+            ],
+            // Ajoutez d'autres messages ici
+        ];
 
-        for ($i = 1; $i <= 5; $i++) {
+        foreach ($messageData as $data) {
             $message = new Message();
-            $message->setMessagecontent($faker->paragraph);
-            $message->setDatetimesent($faker->dateTimeThisDecade);
-            $message->setTitle($faker->text(45)); // Génère un titre avec une longueur maximale de 50 caractères
-            $message->setUserId($faker->randomElement($users));
+            $message->setMessageContent($data['MessageContent']);
+            $message->setDateTimeSent($data['DateTimeSent']);
+            $message->setAttachment($data['Attachment']);
+            $message->setTitle($data['Title']);
+
             $manager->persist($message);
         }
 

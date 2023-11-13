@@ -2,35 +2,53 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Article;
-use App\Entity\Categorie;
-use Faker\Factory;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create();
-        $categories = $manager->getRepository(Categorie::class)->findAll();
+        // Obtenez les références aux catégories depuis les fixtures de catégories
+        $category1 = $this->getReference('category_0');
+        $category2 = $this->getReference('category_1');
 
-        for ($i = 1; $i <= 5; $i++) {
+        $articleData = [
+            [
+                'Name' => 'Article 1',
+                'Description' => 'Description de l\'article 1',
+                'Price' => 19.99,
+                'Stock' => 100,
+            ],
+            [
+                'Name' => 'Article 2',
+                'Description' => 'Description de l\'article 2',
+                'Price' => 29.99,
+                'Stock' => 50,
+            ],
+        ];
+
+        foreach ($articleData as $data) {
             $article = new Article();
-            $article->setName($faker->word);
-            $article->setDescription($faker->sentence);
-            $article->setPrice($faker->randomFloat(2, 10, 100));
-            $article->setStock($faker->numberBetween(10, 100));
+            $article
+                ->setName($data['Name'])
+                ->setDescription($data['Description'])
+                ->setPrice($data['Price'])
+                ->setStock($data['Stock']);
 
-            // Ajoutez une vérification pour s'assurer que la catégorie est valide
-            $category = $faker->randomElement($categories);
-            if ($category instanceof Categorie) {
-                $article->addCategoryId($category);
-            }
+            // Ajouter les articles aux catégories
+            $category1->addArticle($article);
+            $category2->addArticle($article);
 
             $manager->persist($article);
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [CategoryFixtures::class];
     }
 }
