@@ -1,0 +1,58 @@
+@import 'variables';
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: $white;
+  font-weight: normal;
+  font-size: 0.62%;
+  color: $black;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-sen);
+}
+
+h1 {
+  font-size: $font_size_h1;
+  line-height: $line_height_h1;
+}
+
+h2 {
+  font-size: $font_size_h2;
+  line-height: $line_height_h2;
+}
+
+h3 {
+  font-size: $font_size_h3;
+  line-height: $line_height_h3;
+}
+
+h4 {
+  font-size: $font_size_h4;
+  line-height: $line_height_h4;
+}
+
+a,
+p,
+li {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 19px;
+  color: $black;
+}
+
+a {
+  color: $black;
+}
+
+ul,
+ol {
+  padding-left: 1.5rem;
+}

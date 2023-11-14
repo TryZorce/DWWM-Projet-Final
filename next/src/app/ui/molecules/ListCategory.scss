@@ -1,0 +1,16 @@
+/* ListCategory.scss */
+.list-category {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .category-item {
+    margin-bottom: 20px;
+    text-align: center;
+  
+    p {
+      margin-top: 10px;
+    }
+  }
+  

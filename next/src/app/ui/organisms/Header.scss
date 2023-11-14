@@ -1,0 +1,44 @@
+/* Header.scss */
+@import '../../../theme/variables';
+
+.header {
+  background-color: $white;
+  color: $primary;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Styles de base pour les grands écrans */
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.header-left {
+  margin-right: 20px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+/* Media Queries pour les petits écrans (par exemple, smartphones) */
+@media (max-width: 576px) {
+  .header-left,
+  .header-right {
+    width: 100%; 
+    text-align: center; 
+    margin: 0; 
+  }
+
+  .header-right {
+    margin-top: 10px; 
+  }
+}

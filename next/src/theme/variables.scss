@@ -1,0 +1,101 @@
+// Updated Colors
+$primary: #F3A9A0;
+$secondary: #FFFFFF; // Secondary color set to white
+$tertiary: #272727;
+
+// Updated Primary Variations
+$primary_light: #FBC5BB;
+$primary_lighter: #FFDBD6;
+$primary_dark: #C2746D;
+$primary_darker: #9D4A43;
+$primary_focus: #E16F64;
+
+// Updated Secondary Variations
+$secondary_light: #F5F5F5; // Light color based on white
+$secondary_lighter: #F9F9F9; // Lighter color based on white
+$secondary_dark: #E0E0E0; // Dark color based on white
+$secondary_darker: #C0C0C0; // Darker color based on white
+$secondary_focus: #ECECEC; // Focus color based on white
+
+// Le reste
+$black: #252625;
+$white: #fafafa;
+$gray: #d8d9d7;
+$gray_light: #eff3f8;
+$gray_dark: #8c8b88;
+$gray_darker: #494a49;
+$success: #22c55e;
+$info: #3b82f6;
+$warning: #f59e0b;
+$help: #a855f7;
+$danger: #ef4444;
+$error: #e93535;
+$message_info: #e9e9ff;
+$message_success: #e4f8f0;
+$message_warning: #fff2e2;
+$message_error: #ffe7e6;
+$transparent: transparent;
+
+// Font weight.
+$regular: 400;
+$medium: 500;
+$semi_bold: 600;
+$bold: 700;
+$extra_bold: 800;
+
+// Font size.
+$font_size_h1: 2.5rem;
+$font_size_h2: 2rem;
+$font_size_h3: 1.5rem;
+$font_size_h4: 1.25rem;
+
+// Line height.
+$line_height_h1: 48px;
+$line_height_h2: 38px;
+$line_height_h3: 29px;
+$line_height_h4: 24px;
+
+// Breakpoints.
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1280px;
+
+// VARIABLE USED FOR PRIME REACT CUSTOM THEME //
+// GENERAL
+//$text: $black;
+//$text_secondary: $gray_darker;
+// PALETTE
+//$primary: $primary;
+//$text_on_primary: $white;
+//$primary_dark: $primary_dark;
+//$primary_darker: $primary_darker;
+//$highlight_background: $white;
+//$text_on_highlight: $primary_darker;
+//$highlight_background_on_focus: $primary_lighter;
+//$focus_outline: $primary_light;
+//$background_on_hover: $white;
+//$error: $error;
+// SURFACE
+//$header: $white;
+//$content: $white;
+//$border: $gray;
+// FORM
+//$background: $white;
+//$border: $gray;
+//$hover_border: $primary_light;
+//$focus_border: $primary_light;
+//$filled_background: $white;
+// BUTTON
+//$secondary_button: $secondary;
+//$secondary_text: $white;
+//$success_button: $success;
+//$success_text: $white;
+//$info_button: $info;
+//$info_text: $white;
+//$warning_button: $warning;
+//$warning_text: $white;
+//$help_button: $help;
+//$help_text: $white;
+//$danger_button: $danger;
+//$danger_text: $white;

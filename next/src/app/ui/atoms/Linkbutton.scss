@@ -1,0 +1,49 @@
+@import '../../theme/variables';
+
+.link__button {
+  text-decoration: none;
+
+  &.link__button--primary {
+    background: $primary;
+    border-color: $primary;
+
+    &:hover {
+      background: $primary_dark;
+      border-color: $primary_dark;
+    }
+
+    &:active {
+      background: $primary_darker;
+      border-color: $primary_darker;
+    }
+
+    &:focus {
+      box-shadow:
+        0 0 0 2px #fff,
+        0 0 0 4px $primary_focus,
+        0 1px 2px 0 #000;
+    }
+  }
+
+  &.link__button--secondary {
+    background: $secondary;
+    border-color: $secondary;
+
+    &:hover {
+      background: $secondary_dark;
+      border-color: $secondary_dark;
+    }
+
+    &:active {
+      background: $secondary_darker;
+      border-color: $secondary_darker;
+    }
+
+    &:focus {
+      box-shadow:
+        0 0 0 2px #fff,
+        0 0 0 4px $secondary_focus,
+        0 1px 2px 0 #000;
+    }
+  }
+}

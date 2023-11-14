@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $uuid = null;
+    private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -30,43 +31,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $phone = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 10)]
-    private ?string $phone = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $gdpr = null;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Message::class)]
-    private Collection $message_id;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
-    private Collection $cart_id;
-
-    public function __construct()
-    {
-        $this->message_id = new ArrayCollection();
-        $this->cart_id = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUuid(): ?string
+    public function getEmail(): ?string
     {
-        return $this->uuid;
+        return $this->email;
     }
 
-    public function setUuid(string $uuid): static
+    public function setEmail(string $email): static
     {
-        $this->uuid = $uuid;
+        $this->email = $email;
 
         return $this;
     }
@@ -78,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->uuid;
+        return (string) $this->email;
     }
 
     /**
@@ -124,36 +110,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
+    public function getPhone(): ?int
     {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): static
+    public function setPhone(?int $phone): static
     {
         $this->phone = $phone;
 
@@ -172,62 +134,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getMessageId(): Collection
+    public function getName(): ?string
     {
-        return $this->message_id;
+        return $this->name;
     }
 
-    public function addMessageId(Message $messageId): static
+    public function setName(string $name): static
     {
-        if (!$this->message_id->contains($messageId)) {
-            $this->message_id->add($messageId);
-            $messageId->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessageId(Message $messageId): static
-    {
-        if ($this->message_id->removeElement($messageId)) {
-            // set the owning side to null (unless already changed)
-            if ($messageId->getUserId() === $this) {
-                $messageId->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Cart>
-     */
-    public function getCartId(): Collection
-    {
-        return $this->cart_id;
-    }
-
-    public function addCartId(Cart $cartId): static
-    {
-        if (!$this->cart_id->contains($cartId)) {
-            $this->cart_id->add($cartId);
-            $cartId->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCartId(Cart $cartId): static
-    {
-        if ($this->cart_id->removeElement($cartId)) {
-            // set the owning side to null (unless already changed)
-            if ($cartId->getUser() === $this) {
-                $cartId->setUser(null);
-            }
-        }
+        $this->name = $name;
 
         return $this;
     }

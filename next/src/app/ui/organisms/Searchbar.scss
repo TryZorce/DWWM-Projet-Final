@@ -1,0 +1,28 @@
+// SearchBar.scss
+@import '../../../theme/variables.scss'; // Utilisez un chemin relatif pour accéder au fichier variables.scss
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: $white; // Utilisez la variable de couleur principale définie dans variables.scss
+  border: 1px solid $gray; // Utilisez la variable de couleur de bordure définie dans variables.scss
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+
+.search-button {
+  background-color: $primary; // Utilisez la variable de couleur principale définie dans variables.scss
+  color: $white; // Utilisez la variable de couleur de texte définie dans variables.scss
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 5px;
+}
