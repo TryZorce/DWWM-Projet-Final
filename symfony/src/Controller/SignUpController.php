@@ -37,7 +37,6 @@ class SignUpController extends AbstractController
         $userPassword = $requestContent['password'];
         $userName = $requestContent['name'];
         $userPhone = $requestContent['phone'];
-        $userUuid = $requestContent['uuid'];
 
         $userRepository = $this->entityManager->getRepository(User::class);
         $registeredUser = $userRepository->findOneBy(['email' => $userEmail]);
@@ -50,7 +49,6 @@ class SignUpController extends AbstractController
         // Hash le mot de passe de l'utilisateur et l'enregistre.
         $newUser = new User();
         $newUser->setEmail($userEmail);
-        $newUser->setUuid($userUuid);
         $newUser->setName($userName);
         $newUser->setPhone($userPhone);
         $newUser->setPassword($this->passwordHasher->hashPassword($newUser, $userPassword));

@@ -31,7 +31,6 @@ class UserFixtures extends AbstractFixtures
                 'Carts_ID' => 'another_cart_id_here',
                 'Carts_Promotions_ID' => 'another_cart_promotion_id_here',
             ],
-            // Ajoutez d'autres utilisateurs ici
         ];
 
         foreach ($userData as $i => $data) {
