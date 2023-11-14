@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import Header from './ui/organisms/Header';
+import ArticleList from './ui/molecules/ListArticle';
 
 const Page = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -21,6 +22,7 @@ const Page = () => {
           <li key={index}>{result}</li>
         ))}
       </ul>
+      <ArticleList/>
     </div>
   );
 };
