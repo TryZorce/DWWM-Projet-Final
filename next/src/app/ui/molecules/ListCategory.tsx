@@ -50,7 +50,7 @@ const ListCategory = () => {
     <div className="list-category">
       {categoryData.map((category) => (
         <div key={category.id} className="category-item">
-          <Image src={category.imageSrc} alt={category.text} />
+          <Image src={category.imageSrc} isRound={false}/>
           <p>{category.text}</p>
         </div>
       ))}
