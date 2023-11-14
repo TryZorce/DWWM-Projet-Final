@@ -10,21 +10,19 @@ class CartFixtures extends AbstractFixtures
 {
     public function load(ObjectManager $manager)
     {
-        $cartData = [
-            [
-                'Quantity' => 5,
-                'Promotions_ID' => 'your_promotion_id_here', // Assurez-vous de spécifier l'ID de la promotion existante
-            ],
-            [
-                'Quantity' => 3,
-                'Promotions_ID' => 'another_promotion_id_here',
-            ],
+        $cartQuantity = [
+            5,
+            4,
+            3,
+            28,
+            39,
         ];
 
-        foreach ($cartData as $data) {
+        foreach ($cartQuantity as $i => $quantity) {
             $cart = new Cart();
-            $cart->setQuantity($data['Quantity']);
+            $cart->setQuantity($quantity);
             $manager->persist($cart);
+            $this->setReference('cart_' . $i, $cart);
         }
 
         $manager->flush();

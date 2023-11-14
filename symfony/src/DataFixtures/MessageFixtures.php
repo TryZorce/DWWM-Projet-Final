@@ -2,13 +2,18 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\AbstractFixtures;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Message;
 
-class MessageFixtures extends AbstractFixtures
+class MessageFixtures extends AbstractFixtures implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+
+        $user1 = $this->getReference('user_0');
+        $user2 = $this->getReference('user_1');
+        
         $messageData = [
             [
                 'MessageContent' => 'Contenu du message 1',
@@ -25,7 +30,7 @@ class MessageFixtures extends AbstractFixtures
             // Ajoutez d'autres messages ici
         ];
 
-        foreach ($messageData as $data) {
+        foreach ($messageData as $i => $data) {
             $message = new Message();
             $message->setMessageContent($data['MessageContent']);
             $message->setDateTimeSent($data['DateTimeSent']);
@@ -36,5 +41,9 @@ class MessageFixtures extends AbstractFixtures
         }
 
         $manager->flush();
+    }
+    public function getDependencies()
+    {
+        return [UserFixtures::class];
     }
 }

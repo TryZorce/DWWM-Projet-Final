@@ -14,6 +14,10 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
         $category1 = $this->getReference('category_0');
         $category2 = $this->getReference('category_1');
 
+        // Obtenez la référence au panier depuis les fixtures de paniers
+        $cart1 = $this->getReference('cart_0');
+        $cart2 = $this->getReference('cart_1');
+
         $articleData = [
             [
                 'Name' => 'Article 1',
@@ -41,6 +45,10 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
             $category1->addArticle($article);
             $category2->addArticle($article);
 
+            // Ajouter les articles aux paniers
+            $cart1->addArticle($article);
+            $cart2->addArticle($article);
+
             $manager->persist($article);
         }
 
@@ -49,6 +57,6 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
 
     public function getDependencies()
     {
-        return [CategoryFixtures::class];
+        return [CategoryFixtures::class, CartFixtures::class];
     }
 }

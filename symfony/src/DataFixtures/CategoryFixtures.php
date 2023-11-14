@@ -3,11 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\Categorie;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\AbstractFixtures;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Category;
 
-class CategoryFixtures extends Fixture
+class CategoryFixtures extends AbstractFixtures
 {
     public function load(ObjectManager $manager)
     {
@@ -24,7 +23,7 @@ class CategoryFixtures extends Fixture
             $category->setCategoryname($name);
 
             $manager->persist($category);
-            $this->addReference('category_' . $i, $category);
+            $this->setReference('category_' . $i, $category);
         }
 
         $manager->flush();
