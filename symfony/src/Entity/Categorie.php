@@ -24,6 +24,9 @@ class Categorie
     #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'category_id')]
     private Collection $articles;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Image = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -69,6 +72,18 @@ class Categorie
         if ($this->articles->removeElement($article)) {
             $article->removeCategoryId($this);
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->Image;
+    }
+
+    public function setImage(?string $Image): static
+    {
+        $this->Image = $Image;
 
         return $this;
     }

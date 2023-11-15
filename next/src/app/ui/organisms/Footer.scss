@@ -1,0 +1,27 @@
+@import '../../../theme/variables.scss';
+
+.footer_wrapper {
+    background-color: $secondary;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 5px;
+}
+
+.footer_image {
+    display: flex;
+    width: 100%; /* Utiliser 100% de la largeur du parent */
+    justify-content: center; /* Centrer horizontalement les éléments */
+    gap: 100px;
+}
+
+/* Ajouter une marge entre les icônes si nécessaire */
+.footer_image img {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    //border: 1px solid gray;
+    border-radius: 25%;
+    padding: 2px;
+}

@@ -1,9 +1,8 @@
 'use client'
 import React, { useState } from 'react';
-import Header from './ui/organisms/Header';
-import ArticleList from './ui/molecules/ArticleList';
-import Footer from './ui/organisms/Footer';
-import CategoryList from './ui/molecules/CategoryList';
+import Header from '../ui/organisms/Header';
+import Footer from '../ui/organisms/Footer';
+import ArticleDetail from '@/ui/molecules/ArticleDetail';
 
 const Page = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -18,8 +17,7 @@ const Page = () => {
   return (
     <div>
       <Header/>
-      <CategoryList/>
-      <ArticleList/>
+      <ArticleDetail/>
       <Footer/>
     </div>
   );

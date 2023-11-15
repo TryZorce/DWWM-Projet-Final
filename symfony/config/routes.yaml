@@ -5,3 +5,7 @@ controllers:
     type: attribute
 api_login_check:
     path: /api/login_check
+sign_up:
+    path: /sign-up
+    controller: App\Controller\SignUpController
+    methods: ['POST']

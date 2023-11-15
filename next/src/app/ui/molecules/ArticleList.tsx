@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react';
 
 const ArticlesPage = () => {
   const [articles, setArticles] = useState([]);
-  const options = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/articles',options);
+        const response = await fetch('http://localhost:8000/api/articles');
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
         const data = await response.json();
         setArticles(data['hydra:member']);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des articles : ', error);
+      } catch (error: any) {
+        console.error('Erreur lors de la récupération des articles : ', error.message);
       }
     };
 
     fetchArticles();
   }, []);
-console.log(articles);
+
+  console.log(articles);
 
   return (
     <div>
@@ -31,6 +31,7 @@ console.log(articles);
           <li key={article.id}>
             <p>{article.name}</p>
             <p>{article.description}</p>
+            <img src={`${article.image}`} alt={article.name} />
           </li>
         ))}
       </ul>

@@ -24,12 +24,56 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
                 'Description' => 'Description de l\'article 1',
                 'Price' => 19.99,
                 'Stock' => 100,
+                'Image' => "/img/Article/Article1.png"
             ],
             [
                 'Name' => 'Article 2',
                 'Description' => 'Description de l\'article 2',
                 'Price' => 29.99,
                 'Stock' => 50,
+                'Image' => "/img/Article/Article2.png"
+            ],
+            [
+                'Name' => 'Article 3',
+                'Description' => 'Description de l\'article 3',
+                'Price' => 29.99,
+                'Stock' => 50,
+                'Image' => "/img/Article/Article3.png"
+            ],
+            [
+                'Name' => 'Article 4',
+                'Description' => 'Description de l\'article 4',
+                'Price' => 29.99,
+                'Stock' => 50,
+                'Image' => "/img/Article/Article4.png"
+            ],
+            [
+                'Name' => 'Article 5',
+                'Description' => 'Description de l\'article 5',
+                'Price' => 29.99,
+                'Stock' => 50,
+                'Image' => "/img/Article/Article5.png"
+            ],
+            [
+                'Name' => 'Article 6',
+                'Description' => 'Description de l\'article 6',
+                'Price' => 29.99,
+                'Stock' => 50,
+                'Image' => "/img/Article/Article6.png"
+            ],
+            [
+                'Name' => 'Article 7',
+                'Description' => 'Description de l\'article 7',
+                'Price' => 29.99,
+                'Stock' => 50,
+                'Image' => "/img/Article/Article7.png"
+            ],
+            [
+                'Name' => 'Article 8',
+                'Description' => 'Description de l\'article 8',
+                'Price' => 29.99,
+                'Stock' => 50,
+                'Image' => "/img/Article/Article8.png"
             ],
         ];
 
@@ -39,7 +83,8 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
                 ->setName($data['Name'])
                 ->setDescription($data['Description'])
                 ->setPrice($data['Price'])
-                ->setStock($data['Stock']);
+                ->setStock($data['Stock'])
+                ->setImage($data['Image']);
 
             // Ajouter les articles aux catégories
             $category1->addArticle($article);

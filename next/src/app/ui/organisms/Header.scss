@@ -1,44 +1,56 @@
-/* Header.scss */
+// Header.scss
+
 @import '../../../theme/variables';
 
+/* Styles for the header */
 .header {
+  position: fixed; /* Set the position to fixed to keep it at the top */
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: $white;
   color: $primary;
   padding: 10px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-
-  /* Styles de base pour les grands écrans */
+  z-index: 1000; 
 }
 
+/* Styles for the content within the header */
 .header-content {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
+/* Styles for the left side of the header */
 .header-left {
   margin-right: 20px;
 }
 
+/* Styles for the right side of the header */
 .header-right {
   display: flex;
   align-items: center;
   margin-left: 20px;
 }
 
-/* Media Queries pour les petits écrans (par exemple, smartphones) */
+/* Media Queries for small screens (e.g., smartphones) */
 @media (max-width: 576px) {
   .header-left,
   .header-right {
-    width: 100%; 
-    text-align: center; 
-    margin: 0; 
+    width: 100%;
+    text-align: center;
+    margin: 0;
   }
 
   .header-right {
-    margin-top: 10px; 
+    margin-top: 10px;
   }
+}
+
+/* Add margin to the body to account for the fixed header */
+body {
+  margin-top: 100px; /* Adjust the value based on the height of your header */
 }

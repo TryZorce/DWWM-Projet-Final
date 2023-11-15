@@ -36,6 +36,9 @@ class Article
     #[ORM\ManyToMany(targetEntity: Cart::class, inversedBy: 'articles')]
     private Collection $cart_id;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Image = null;
+
     public function __construct()
     {
         $this->category_id = new ArrayCollection();
@@ -139,6 +142,18 @@ class Article
     public function removeCartId(Cart $cartId): static
     {
         $this->cart_id->removeElement($cartId);
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->Image;
+    }
+
+    public function setImage(?string $Image): static
+    {
+        $this->Image = $Image;
 
         return $this;
     }

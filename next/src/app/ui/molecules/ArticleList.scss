@@ -1,0 +1,16 @@
+@import '../../../theme/variables.scss';
+
+.article-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust as needed */
+    padding: 0;
+  }
+  
+  .article-item {
+    width: 48%; /* Adjust as needed */
+    margin-bottom: 16px; /* Adjust as needed */
+    box-sizing: border-box;
+  }
+  
