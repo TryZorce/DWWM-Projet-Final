@@ -1,7 +1,9 @@
 'use client'
 import React, { useState } from 'react';
 import Header from './ui/organisms/Header';
-import ArticleList from './ui/molecules/ListArticle';
+import ArticleList from './ui/molecules/ArticleList';
+import Footer from './ui/organisms/Footer';
+import CategoryList from './ui/molecules/CategoryList';
 
 const Page = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -16,13 +18,9 @@ const Page = () => {
   return (
     <div>
       <Header/>
-      <h2>Résultats de la recherche :</h2>
-      <ul>
-        {searchResults.map((result, index) => (
-          <li key={index}>{result}</li>
-        ))}
-      </ul>
+      <CategoryList/>
       <ArticleList/>
+      <Footer/>
     </div>
   );
 };

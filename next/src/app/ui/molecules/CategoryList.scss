@@ -1,0 +1,32 @@
+// CategoryList.scss
+@import '../../../theme/variables.scss';
+
+.list-category {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.category-item {
+  margin-bottom: 20px;
+  text-align: center;
+
+  a {
+    text-decoration: none;
+    outline: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  p {
+    margin-top: 10px;
+  }
+
+  .image{
+    border:none;
+    height: 100px;
+    width: 100px;
+  }
+}
