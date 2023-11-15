@@ -6,6 +6,7 @@
     position: fixed;
     bottom: 0;
     left: 0;
+    margin-bottom: 5px;
 }
 
 .footer_image {
@@ -17,5 +18,10 @@
 
 /* Ajouter une marge entre les icônes si nécessaire */
 .footer_image img {
+    height: 40px;
+    width: 40px;
     margin-right: 10px;
+    //border: 1px solid gray;
+    border-radius: 25%;
+    padding: 2px;
 }

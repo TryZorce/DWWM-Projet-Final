@@ -31,6 +31,7 @@ const ArticlesPage = () => {
           <li key={article.id}>
             <p>{article.name}</p>
             <p>{article.description}</p>
+            <img src={`${article.image}`} alt={article.name} />
           </li>
         ))}
       </ul>

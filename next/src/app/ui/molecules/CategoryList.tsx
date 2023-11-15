@@ -1,56 +1,39 @@
-// ListCategory.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from '../atoms/Image';
-import ImageNext  from 'next/image';
-import './CategoryList.scss' // Assurez-vous d'importer correctement le composant Image
-
-const categoryData = [
-  {
-    id: 1,
-    imageSrc: '/img/Category1.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 1',
-  },
-  {
-    id: 2,
-    imageSrc: '/img/Category2.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 2',
-  },
-  {
-    id: 3,
-    imageSrc: '/img/Category3.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 3',
-  },
-  {
-    id: 4,
-    imageSrc: '/img/Category4.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 4',
-  },
-  {
-    id: 5,
-    imageSrc: '/img/Category5.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 5',
-  },
-  {
-    id: 6,
-    imageSrc: '/img/Category6.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 6',
-  },
-  {
-    id: 7,
-    imageSrc: '/img/Category7.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 7',
-  },
-  {
-    id: 8,
-    imageSrc: '/img/Autre.png', // Ajoutez le chemin vers l'image
-    text: 'Catégorie 8',
-  },
-];
+import './CategoryList.scss';
 
 const CategoryList = () => {
-  //const handleClick = (category) => {
-    //console.log(`Image cliquée pour la catégorie : ${category.text}`);
-//  };
+  const [categoryData, setCategoryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/categories'); // Replace with your actual API endpoint
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setCategoryData(data['hydra:member']);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div className="list-category">
@@ -60,11 +43,11 @@ const CategoryList = () => {
           <a
             href="#"
             onClick={(e) => {
-  //            e.preventDefault();
-    //          handleClick(category);
+              e.preventDefault();
+              // Handle click if needed
             }}
           >
-            <Image src={category.imageSrc} isRound={false} />
+             <img src={`${category.image}`} alt={category.name} />
           </a>
           <p>{category.text}</p>
         </div>
