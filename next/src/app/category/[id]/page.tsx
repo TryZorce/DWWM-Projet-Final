@@ -1,6 +1,6 @@
 "use client"
-import React from 'react';
-import ArticlePage from '@/ui/molecules/ArticleDetail';
+import React, { useEffect, useState } from 'react';
+import CategoryPage from '@/ui/molecules/CategoryDetail';
 
 const IdDetail = ({ params }) => {
   const { id } = params;
@@ -9,7 +9,7 @@ const IdDetail = ({ params }) => {
     return <p>L'identifiant de l'article est manquant.</p>;
   }
 
-  return <ArticlePage id={id} />;
+  return <CategoryPage categoryId={id} />;
 };
 
 export default IdDetail;
