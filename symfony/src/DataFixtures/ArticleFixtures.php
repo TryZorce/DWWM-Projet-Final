@@ -10,11 +10,9 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
 {
     public function load(ObjectManager $manager)
     {
-        // Obtenez les références aux catégories depuis les fixtures de catégories
         $category1 = $this->getReference('category_0');
         $category2 = $this->getReference('category_1');
 
-        // Obtenez la référence au panier depuis les fixtures de paniers
         $cart1 = $this->getReference('cart_0');
         $cart2 = $this->getReference('cart_1');
 
@@ -86,11 +84,10 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
                 ->setStock($data['Stock'])
                 ->setImage($data['Image']);
 
-            // Ajouter les articles aux catégories
+
             $category1->addArticle($article);
             $category2->addArticle($article);
 
-            // Ajouter les articles aux paniers
             $cart1->addArticle($article);
             $cart2->addArticle($article);
 

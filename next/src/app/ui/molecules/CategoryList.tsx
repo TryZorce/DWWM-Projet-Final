@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Image from '../atoms/Image';
+import Link from 'next/link';
 import './CategoryList.scss';
 
 const CategoryList = () => {
@@ -10,7 +10,7 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/categories'); // Replace with your actual API endpoint
+        const response = await fetch('http://localhost:8000/api/categories');
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -36,22 +36,20 @@ const CategoryList = () => {
   }
 
   return (
-    <div className="list-category">
+    <div className="list-category-container">
       <p>Catégorie :</p>
-      {categoryData.map((category) => (
-        <div key={category.id} className="category-item">
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              // Handle click if needed
-            }}
-          >
-             <img src={`${category.image}`} alt={category.name} />
-          </a>
-          <p>{category.text}</p>
-        </div>
-      ))}
+      <div className="list-category">
+        {categoryData.map((category) => (
+          <div key={category.id} className="category-item">
+            <Link href={`/category/${category.id}`}>
+              <div className='list-center'>
+                <img src={`${category.image}`} alt={category.name} className="image" />
+                <p>{category.categoryname}</p>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

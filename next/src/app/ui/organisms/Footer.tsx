@@ -12,8 +12,8 @@ const Footer = () => {
                         <Image src='/icons/House.png' alt='House Icon' width={32} height={32} />
                     
                 </Link>
+                
                 <Link href='/user'>
-                    
                         <Image src='/icons/User.png' alt='User Icon' width={32} height={32} />
                     
                 </Link>

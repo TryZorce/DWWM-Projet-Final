@@ -1,60 +1,96 @@
 import React, { useState } from 'react';
-import './SignupForm.scss'
+import './SignupForm.scss';
+
 const InscriptionForm = () => {
   const [user, setUser] = useState({
-    nom: '',
-    prenom: '',
+    name: '',
     email: '',
-    motDePasse: '',
+    password: '',
+    phone: '',
   });
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false); // New state for success message
+
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await fetch('https://localhost:8000/api/users', {
+      // Basic form validation
+      if (!user.name || !user.email || !user.password || !user.phone) {
+        setError('Veuillez remplir tous les champs.');
+        return;
+      }
+
+      // You can add more specific form validation here (e.g., email format, password criteria)
+
+      const response = await fetch('http://localhost:8000/api/users', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
         },
         body: JSON.stringify(user),
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData); // Gérer la réponse du backend
+        console.log(responseData);
+
+        // Set success state to true
+        setSuccess(true);
+
+        // Reset form and error state
+        setUser({
+          name: '',
+          email: '',
+          password: '',
+          phone: '',
+        });
+        setError(null);
       } else {
-        console.error('Erreur lors de l\'inscription');
+        const errorData = await response.json();
+        setError(errorData.message || 'Erreur lors de l\'inscription');
       }
     } catch (error) {
       console.error('Erreur lors de l\'inscription', error);
+      setError('Erreur lors de l\'inscription');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Nom:
-        <input type="text" name="nom" value={user.nom} onChange={handleChange} />
-      </label>
-      <label>
-        Prénom:
-        <input type="text" name="prenom" value={user.prenom} onChange={handleChange} />
-      </label>
-      <label>
-        Email:
-        <input type="email" name="email" value={user.email} onChange={handleChange} />
-      </label>
-      <label>
-        Mot de passe:
-        <input type="password" name="motDePasse" value={user.motDePasse} onChange={handleChange} />
-      </label>
-      <button type="submit">S'inscrire</button>
-    </form>
+    <div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>Inscription réussie !</p>}
+      <form onSubmit={handleSubmit}>
+        <label>
+          Full Name:
+          <input type="text" name="name" value={user.name} onChange={handleChange} />
+        </label>
+        <label>
+          Email:
+          <input type="email" name="email" value={user.email} onChange={handleChange} />
+        </label>
+        <label>
+          Phone:
+          <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
+        </label>
+        <label>
+          Password:
+          <input type="password" name="password" value={user.password} onChange={handleChange} />
+        </label>
+        <button type="submit" disabled={loading}>
+          {loading ? 'En cours...' : 'S\'inscrire'}
+        </button>
+      </form>
+    </div>
   );
 };
 
