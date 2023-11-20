@@ -6,7 +6,6 @@ interface Article {
   id: number;
   name: string;
   image: string;
-  // Ajoutez d'autres propriétés d'article si nécessaire
 }
 
 const ArticlesPage: React.FC = () => {
