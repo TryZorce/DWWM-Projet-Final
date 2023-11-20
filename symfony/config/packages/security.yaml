@@ -34,6 +34,10 @@ security:
         - { path: ^/api/users, roles: PUBLIC_ACCESS }
         - { path: ^/api/articles, roles: PUBLIC_ACCESS }
         - { path: ^/api/categories, roles: PUBLIC_ACCESS }
+        - { path: ^/api/carts, roles: PUBLIC_ACCESS }
+        - { path: ^/api/messages, roles: PUBLIC_ACCESS }
+        - { path: ^/api/invoices, roles: PUBLIC_ACCESS }
+        - { path: ^/api/promotions, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

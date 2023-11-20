@@ -1,42 +1,76 @@
+// Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 
-const CartsPage = () => {
-  const [carts, setCarts] = useState([]);
+// Define the Article interface
+interface Article {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  image: string;
+}
 
+// ArticlePage component definition
+const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
+  // State hooks for article data, loading state, and error message
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // useEffect for fetching data when id changes
   useEffect(() => {
-    const fetchCarts = async () => {
+    const fetchArticle = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/carts/');
+        if (!id) {
+          throw new Error("L'identifiant de l'article est manquant.");
+        }
+
+        const response = await fetch(`http://localhost:8000/api/articles/${id}`);
+
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
         }
 
-        const data = await response.json();
-        setCarts(data['hydra:member']);
-      } catch (error: any) {
-        console.error('Erreur lors de la récupération des articles : ', error.message);
+        const data: Article = await response.json();
+        setArticle(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchCarts();
-  }, []);
+    // Call the fetchArticle function
+    fetchArticle();
+  }, [id]);
 
-  console.log(carts);
+  // Render loading state
+  if (loading) {
+    return <p>Chargement en cours...</p>;
+  }
 
+  // Render error state
+  if (error) {
+    return <p>Erreur : {error}</p>;
+  }
+
+  // Render when no article data is found
+  if (!article) {
+    return <p>Aucun article trouvé.</p>;
+  }
+
+  // Render article data
   return (
     <div>
-      <h1>Votre panier</h1>
-      <ul>
-        {carts.map((cart) => (
-          <li key={cart.id}>
-            <p>{cart.name}</p>
-            <p>{cart.description}</p>
-            <img src={`${cart.image}`} alt={cart.name} />
-          </li>
-        ))}
-      </ul>
+      <h1>{article.name}</h1>
+      <img src={article.image} alt={article.name} />
+      <p>Description : {article.description}</p>
+      <p>Prix : {article.price} $</p>
+      <p>Stock : {article.stock}</p>
     </div>
   );
 };
 
-export default CartsPage;
+// Export the ArticlePage component
+export default ArticlePage;

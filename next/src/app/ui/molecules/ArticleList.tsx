@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import './ArticleList.scss';
 
-const ArticlesPage = () => {
-  const [articles, setArticles] = useState([]);
+interface Article {
+  id: number;
+  name: string;
+  image: string;
+}
+
+const ArticlesPage: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -13,28 +23,39 @@ const ArticlesPage = () => {
 
         const data = await response.json();
         setArticles(data['hydra:member']);
-      } catch (error: any) {
-        console.error('Erreur lors de la récupération des articles : ', error.message);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
       }
     };
 
     fetchArticles();
   }, []);
 
-  console.log(articles);
+  if (loading) {
+    return <p>Chargement en cours...</p>;
+  }
+
+  if (error) {
+    return <p>Erreur : {error}</p>;
+  }
 
   return (
-    <div>
-      <h1>Liste des Articles</h1>
-      <ul>
+    <div className="article-list-container">
+      <p>Liste des Articles</p>
+      <div className="article-list">
         {articles.map((article) => (
-          <li key={article.id}>
-            <p>{article.name}</p>
-            <p>{article.description}</p>
-            <img src={`${article.image}`} alt={article.name} />
-          </li>
+          <div key={article.id} className="article-item">
+            <Link href={`/article/${article.id}`}>
+              <div className='list-center'>
+                <p>{article.name}</p>
+                <img src={`${article.image}`} alt={article.name} className="image" />
+              </div>
+            </Link>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

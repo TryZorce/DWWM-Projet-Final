@@ -6,7 +6,6 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    margin-bottom: 5px;
 }
 
 .footer_image {
@@ -25,3 +24,7 @@
     border-radius: 25%;
     padding: 2px;
 }
+
+body {
+    margin-bottom: 100px; /* Adjust the value based on the height of your header */
+  }
