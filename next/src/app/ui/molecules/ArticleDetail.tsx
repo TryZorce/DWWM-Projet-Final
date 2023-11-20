@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-const CartsPage = () => {
-  const [carts, setCarts] = useState([]);
+interface Cart {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  // Ajoutez d'autres propriétés du panier si nécessaire
+}
+
+const CartsPage: React.FC = () => {
+  const [carts, setCarts] = useState<Cart[]>([]);
 
   useEffect(() => {
     const fetchCarts = async () => {

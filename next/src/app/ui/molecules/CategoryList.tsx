@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import './CategoryList.scss';
 
-const CategoryList = () => {
-  const [categoryData, setCategoryData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+interface Category {
+  id: number;
+  image: string;
+  categoryname: string;
+}
+
+const CategoryList: React.FC = () => {
+  const [categoryData, setCategoryData] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -43,7 +49,7 @@ const CategoryList = () => {
           <div key={category.id} className="category-item">
             <Link href={`/category/${category.id}`}>
               <div className='list-center'>
-                <img src={`${category.image}`} alt={category.name} className="image" />
+                <img src={`${category.image}`} alt={category.categoryname} className="image" />
                 <p>{category.categoryname}</p>
               </div>
             </Link>

@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import './SignupForm.scss';
 
-const InscriptionForm = () => {
-  const [user, setUser] = useState({
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+const SignupForm: React.FC = () => {
+  const [user, setUser] = useState<User>({
     name: '',
     email: '',
     password: '',
     phone: '',
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false); // New state for success message
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Basic form validation
       if (!user.name || !user.email || !user.password || !user.phone) {
         setError('Veuillez remplir tous les champs.');
         return;
       }
 
-      // You can add more specific form validation here (e.g., email format, password criteria)
-
       const response = await fetch('http://localhost:8000/api/users', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/ld+json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(user),
       });
@@ -42,10 +46,7 @@ const InscriptionForm = () => {
         const responseData = await response.json();
         console.log(responseData);
 
-        // Set success state to true
         setSuccess(true);
-
-        // Reset form and error state
         setUser({
           name: '',
           email: '',
@@ -94,4 +95,4 @@ const InscriptionForm = () => {
   );
 };
 
-export default InscriptionForm;
+export default SignupForm;

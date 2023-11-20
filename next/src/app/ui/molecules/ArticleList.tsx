@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import './ArticleList.scss'
+import './ArticleList.scss';
 
-const ArticlesPage = () => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+interface Article {
+  id: number;
+  name: string;
+  image: string;
+  // Ajoutez d'autres propriétés d'article si nécessaire
+}
+
+const ArticlesPage: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -42,10 +49,10 @@ const ArticlesPage = () => {
         {articles.map((article) => (
           <div key={article.id} className="article-item">
             <Link href={`/article/${article.id}`}>
-            <div className='list-center'>
-              <p>{article.name}</p>
-              <img src={`${article.image}`} alt={article.name} className="image" />
-            </div>
+              <div className='list-center'>
+                <p>{article.name}</p>
+                <img src={`${article.image}`} alt={article.name} className="image" />
+              </div>
             </Link>
           </div>
         ))}
