@@ -1,29 +1,81 @@
-import React, { useState } from 'react';
-import './Searchbar.scss';
+// SearchBar.tsx
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import "./Searchbar.scss"
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
+interface Article {
+  id: number;
+  name: string;
+  description: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [searchText, setSearchText] = useState('');
+const SearchBar: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Article[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = () => {
-    onSearch(searchText);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      if (searchTerm.trim() === '') {
+        setSearchResults([]);
+        setError(null);
+        return;
+      }
+
+      const apiUrl = `http://localhost:8000/api/articles?q=${searchTerm}`;
+
+      try {
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+
+        console.log('API Response:', data);
+
+        if (data['hydra:member'] && Array.isArray(data['hydra:member'])) {
+          setSearchResults(data['hydra:member']);
+          setError(null);
+        } else {
+          console.error('Unexpected data format:', data);
+          setError('Invalid data format received from the server');
+        }
+      } catch (error) {
+        console.error('Error during search:', error);
+        setError('Error during the search');
+      }
+    };
+
+    fetchData();
+  }, [searchTerm]);
 
   return (
-    <div className="search-bar">
+    <div>
       <input
         type="text"
-        className="search-input"
-        placeholder="Rechercher..."
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
       />
-      <button className="search-button" onClick={handleSearch}>
-        Rechercher
-      </button>
+      <div className="searchbar-article-container">
+        {error && <p>{error}</p>}
+        {searchResults.length > 0 ? (
+          searchResults.map(article => (
+            <div key={article.id} className="searchbar-article-item">
+              <Link href={`/article/${article.id}`}>
+                <div className='searchbar-list-center'>
+                  <p>{article.name}</p>
+                  <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="searchbar-image" />
+                </div>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p>No results found</p>
+        )}
+      </div>
     </div>
   );
 };

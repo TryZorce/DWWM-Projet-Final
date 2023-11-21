@@ -1,10 +1,29 @@
+// Import necessary dependencies
 import React, { useState, useEffect } from 'react';
+import './CategoryDetail.scss'; // Import your SCSS file
 
-const CategoryPage = ({ categoryId }) => {
-  const [categoryInfo, setCategoryInfo] = useState(null);
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Define the Article interface
+interface Article {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+}
+
+// Define the Category interface
+interface Category {
+  categoryId: number;
+  categoryname: string;
+  image: string;
+  articles: string[]; // Assuming articles are represented as URLs
+}
+
+const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
+  const [categoryInfo, setCategoryInfo] = useState<Category | null>(null);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCategoryPages = async () => {
@@ -19,30 +38,45 @@ const CategoryPage = ({ categoryId }) => {
           throw new Error(`Erreur HTTP : ${response.status}`);
         }
 
-        const data = await response.json();
+        const data: Category = await response.json();
         setCategoryInfo(data);
 
         if (data.articles && Array.isArray(data.articles)) {
-          const articlesData = await Promise.all(data.articles.map(async (articleUrl) => {
-            const fullArticleUrl = `http://localhost:8000${articleUrl}`; // Ajout du préfixe correct
+          const articlesData = await Promise.all<Article>(
+            data.articles.map(async (articleUrl: string) => {
+              const fullArticleUrl = `http://localhost:8000${articleUrl}`;
 
-            try {
-              const articleResponse = await fetch(fullArticleUrl);
+              try {
+                const articleResponse = await fetch(fullArticleUrl);
 
-              if (!articleResponse.ok) {
-                throw new Error(`Erreur HTTP pour l'article : ${articleResponse.status}`);
+                if (!articleResponse.ok) {
+                  throw new Error(`Erreur HTTP pour l'article : ${articleResponse.status}`);
+                }
+
+                const articleData = await articleResponse.json();
+                if (typeof articleData === 'object' && 'id' in articleData) {
+                  return articleData as Article;
+                } else {
+                  throw new Error('Format de données d\'article invalide.');
+                }
+              } catch (articleError) {
+                if (articleError instanceof Error) {
+                  throw new Error(`Erreur lors de la récupération de l'article : ${articleError.message}`);
+                } else {
+                  throw new Error('Erreur inconnue lors de la récupération de l\'article.');
+                }
               }
-
-              return articleResponse.json();
-            } catch (articleError) {
-              throw new Error(`Erreur lors de la récupération de l'article : ${articleError.message}`);
-            }
-          }));
+            })
+          );
 
           setArticles(articlesData);
         }
       } catch (error) {
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('Erreur inconnue.');
+        }
       } finally {
         setLoading(false);
       }
@@ -52,29 +86,31 @@ const CategoryPage = ({ categoryId }) => {
   }, [categoryId]);
 
   if (loading) {
-    return <p>Chargement en cours...</p>;
+    return <p className="loading-message">Chargement en cours...</p>;
   }
 
   if (error) {
-    return <p>Erreur : {error}</p>;
+    return <p className="error-message">Erreur : {error}</p>;
   }
 
   if (!categoryInfo) {
-    return <p>Aucune information trouvée pour cette catégorie.</p>;
+    return <p className="no-info-message">Aucune information trouvée pour cette catégorie.</p>;
   }
 
   return (
-    <div>
+    <div className="category-container">
       <h3>Liste d'articles</h3>
-      <ul>
-      <h2>{categoryInfo.categoryname}</h2>
-      <img src={categoryInfo.image} alt={categoryInfo.categoryname} />
+      <div className="category-info">
+        <h2>{categoryInfo.categoryname}</h2>
+        <img src={categoryInfo.image} alt={categoryInfo.categoryname} />
+      </div>
+      <ul className="article-list">
         {articles.map((article) => (
-          <li key={article.id}>
+          <li key={article.id} className="article-item">
             <h4>{article.name}</h4>
-            <img src={article.image} alt={article.name} />
-            <p>Description : {article.description}</p>
-            <p>Prix : {article.price.toFixed(2)} €</p>
+            <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="article-image" />
+            <p className="article-description">Description : {article.description}</p>
+            <p className="article-price">Prix : {article.price.toFixed(2)} €</p>
           </li>
         ))}
       </ul>

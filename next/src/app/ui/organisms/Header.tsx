@@ -16,9 +16,6 @@ const Header = () => {
             height={100}
           />
         </div>
-        <div className="header-right">
-          <SearchBar onSearch={() => {}} />
-        </div>
       </div>
     </header>
   );

@@ -1,0 +1,54 @@
+/* ArticleDetail.scss */
+
+.article-container {
+    /* Styles for the entire article container */
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    
+  }
+  
+  .loading-message {
+    /* Styles for the loading message */
+    color: #999;
+    font-size: 18px;
+  }
+  
+  .error-message {
+    /* Styles for the error message */
+    color: #ff0000;
+    font-size: 18px;
+  }
+  
+  .no-article-message {
+    /* Styles for the message when no article is found */
+    color: #999;
+    font-size: 18px;
+  }
+  
+  .article-image {
+    /* Styles for the article image */
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .article-description {
+    /* Styles for the article description */
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .article-price {
+    /* Styles for the article price */
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff; /* Blue color, you can change it */
+  }
+  
+  .article-stock {
+    /* Styles for the article stock */
+    font-size: 16px;
+    color: #28a745; /* Green color, you can change it */
+  }
+  

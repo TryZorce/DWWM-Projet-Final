@@ -1,28 +1,63 @@
-// SearchBar.scss
-@import '../../../theme/variables.scss'; // Utilisez un chemin relatif pour accéder au fichier variables.scss
+@import '../../../theme/variables.scss';
 
-.search-bar {
+
+.searchbar-article-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.searchbar-article-item {
+  width: 30%;
+  margin: 22px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #ddd; /* Add borders for better separation */
+  border-radius: 8px; /* Add rounded corners for a cleaner look */
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f5f5f5; /* Change background color on hover */
+  }
+}
+
+.searchbar-list-center {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: $white; // Utilisez la variable de couleur principale définie dans variables.scss
-  border: 1px solid $gray; // Utilisez la variable de couleur de bordure définie dans variables.scss
-  border-radius: 4px;
-  padding: 5px 10px;
 }
 
-.search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 5px;
+
+.searchbar-image {
+  width: 80px;
+  height: 80px;
+  margin-left: 16px;
+  border-radius: 50%; /* Make the image circular */
 }
 
-.search-button {
-  background-color: $primary; // Utilisez la variable de couleur principale définie dans variables.scss
-  color: $white; // Utilisez la variable de couleur de texte définie dans variables.scss
-  border: none;
+input {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-left: 5px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff; /* Highlight border color on focus */
+  }
+}
+
+p {
+  margin: 0;
+}
+
+input{
+  background-color: $white;
+  color: $primary;
+  border: 2px solid $gray;
 }

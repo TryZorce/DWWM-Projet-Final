@@ -1,5 +1,6 @@
 // Import necessary dependencies
 import React, { useState, useEffect } from 'react';
+import './ArticleDetail.scss'; // Import your SCSS file
 
 // Define the Article interface
 interface Article {
@@ -16,7 +17,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   // State hooks for article data, loading state, and error message
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // Specify the type as string
 
   // useEffect for fetching data when id changes
   useEffect(() => {
@@ -34,8 +35,12 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
 
         const data: Article = await response.json();
         setArticle(data);
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message); // Ensure that 'error' is of type string
+        } else {
+          setError('Une erreur inconnue s\'est produite.');
+        }
       } finally {
         setLoading(false);
       }
@@ -47,27 +52,27 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
 
   // Render loading state
   if (loading) {
-    return <p>Chargement en cours...</p>;
+    return <p className="loading-message">Chargement en cours...</p>;
   }
 
   // Render error state
   if (error) {
-    return <p>Erreur : {error}</p>;
+    return <p className="error-message">Erreur : {error}</p>;
   }
 
   // Render when no article data is found
   if (!article) {
-    return <p>Aucun article trouvé.</p>;
+    return <p className="no-article-message">Aucun article trouvé.</p>;
   }
 
   // Render article data
   return (
-    <div>
+    <div className="article-container">
       <h1>{article.name}</h1>
-      <img src={article.image} alt={article.name} />
-      <p>Description : {article.description}</p>
-      <p>Prix : {article.price} $</p>
-      <p>Stock : {article.stock}</p>
+      <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="article-image" />
+      <p className="article-description">Description : {article.description}</p>
+      <p className="article-price">Prix : {article.price} €</p>
+      <p className="article-stock">Stock : {article.stock}</p>
     </div>
   );
 };
