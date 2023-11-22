@@ -7,14 +7,6 @@ import CategoryList from './ui/molecules/CategoryList';
 import SearchBar from './ui/organisms/Searchbar';
 
 const Page = () => {
-  const [searchResults, setSearchResults] = useState<string[]>([]);
-  
-  const handleSearch = (query: string) => {
-    // Implémentez ici votre logique de recherche en fonction de la requête "query"
-    // Vous pouvez appeler une API ou effectuer une recherche dans vos données
-    // Pour cet exemple, nous utilisons une liste vide pour les résultats.
-    setSearchResults([]);
-  };
 
   return (
     <div>

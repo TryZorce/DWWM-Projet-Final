@@ -1,54 +1,74 @@
-/* ArticleDetail.scss */
-
+@import '../../../theme/variables.scss';
 .article-container {
-    /* Styles for the entire article container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 20px;
     padding: 20px;
-    border: 1px solid #ddd;
-    
+    border: 1px solid white;
   }
   
   .loading-message {
-    /* Styles for the loading message */
-    color: #999;
+    color: $message_info;
     font-size: 18px;
   }
   
   .error-message {
-    /* Styles for the error message */
-    color: #ff0000;
+    color: $error;
     font-size: 18px;
   }
   
   .no-article-message {
-    /* Styles for the message when no article is found */
-    color: #999;
+    color: $message_info;
     font-size: 18px;
   }
   
   .article-image {
-    /* Styles for the article image */
-    max-width: 100%;
+    width: 100px;
     height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .article-name{
+    margin-bottom: 10px;
+  }
+  .article-description {
+    font-size: 16px;
+    line-height: 1.5;
     margin-bottom: 10px;
   }
   
-  .article-description {
-    /* Styles for the article description */
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  
-  .article-price {
-    /* Styles for the article price */
+  .article-container2{
+    display: flex;
+    flex-direction: row;
+    color: $tertiary;
     font-size: 18px;
     font-weight: bold;
-    color: #007bff; /* Blue color, you can change it */
   }
   
   .article-stock {
-    /* Styles for the article stock */
+    margin-left: 10px;
+  }
+  
+  /* Styles for the input and button */
+  input[type="number"] {
+    width: 50px;
+    padding: 5px;
     font-size: 16px;
-    color: #28a745; /* Green color, you can change it */
+    margin-right: 10px;
+    color: $black;
+  }
+  
+  button {
+    background-color: $primary;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: $primary_light;
   }
   

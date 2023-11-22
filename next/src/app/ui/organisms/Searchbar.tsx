@@ -4,6 +4,7 @@ import Link from 'next/link';
 import "./Searchbar.scss"
 
 interface Article {
+  image: string;
   id: number;
   name: string;
   description: string;
@@ -57,24 +58,27 @@ const SearchBar: React.FC = () => {
         type="text"
         placeholder="Search..."
         value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className="searchbar-article-container">
         {error && <p>{error}</p>}
+        {searchTerm.trim() !== '' && searchResults.length === 0 && <p>No results found</p>}
         {searchResults.length > 0 ? (
-          searchResults.map(article => (
+          searchResults.map((article) => (
             <div key={article.id} className="searchbar-article-item">
               <Link href={`/article/${article.id}`}>
-                <div className='searchbar-list-center'>
+                <div className="searchbar-list-center">
                   <p>{article.name}</p>
-                  <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="searchbar-image" />
+                  <img
+                    src={`http://127.0.0.1:8000/images/${article.image}`}
+                    alt={article.name}
+                    className="searchbar-image"
+                  />
                 </div>
               </Link>
             </div>
           ))
-        ) : (
-          <p>No results found</p>
-        )}
+        ) : null}
       </div>
     </div>
   );

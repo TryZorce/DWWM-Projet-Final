@@ -24,7 +24,7 @@ const CategoryList: React.FC = () => {
         const data = await response.json();
         setCategoryData(data['hydra:member']);
         setLoading(false);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
         setLoading(false);
       }

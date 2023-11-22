@@ -1,4 +1,5 @@
 // Import necessary dependencies
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import './CategoryDetail.scss'; // Import your SCSS file
 
@@ -106,12 +107,14 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
       </div>
       <ul className="article-list">
         {articles.map((article) => (
+          <Link href={`/article/${article.id}`}>
           <li key={article.id} className="article-item">
             <h4>{article.name}</h4>
             <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="article-image" />
             <p className="article-description">Description : {article.description}</p>
             <p className="article-price">Prix : {article.price.toFixed(2)} €</p>
           </li>
+          </Link>
         ))}
       </ul>
     </div>
