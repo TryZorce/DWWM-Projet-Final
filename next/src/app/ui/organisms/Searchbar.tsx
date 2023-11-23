@@ -23,7 +23,7 @@ const SearchBar: React.FC = () => {
         return;
       }
 
-      const apiUrl = `http://localhost:8000/api/articles?q=${searchTerm}`;
+      const apiUrl = `http://localhost:8000/api/articles?page=1&name=${searchTerm}`;
 
       try {
         const response = await fetch(apiUrl);
