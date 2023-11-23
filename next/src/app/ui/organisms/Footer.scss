@@ -1,30 +1,61 @@
+// FooterStyles.scss
+
 @import '../../../theme/variables.scss';
 
-.footer_wrapper {
-    background-color: $secondary;
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
+.footer-wrapper {
+  position: fixed;
+  z-index: 50;
+  width: 100%;
+  height: 4rem; /* Adjust the height as needed */
+  max-width: 32rem;
+  transform: translateX(-50%);
+  background-color: $secondary;
+  border: 1px solid #ccc;
+  border-radius: 9999px;
+  bottom: 1rem; /* Adjust the bottom spacing as needed */
+  left: 50%;
+  
 
-.footer_image {
-    display: flex;
-    width: 100%; /* Utiliser 100% de la largeur du parent */
-    justify-content: center; /* Centrer horizontalement les éléments */
-    gap: 100px;
-}
-
-/* Ajouter une marge entre les icônes si nécessaire */
-.footer_image img {
-    height: 40px;
-    width: 40px;
-    margin-right: 10px;
-    //border: 1px solid gray;
-    border-radius: 25%;
-    padding: 2px;
-}
-
-body {
-    margin-bottom: 100px; /* Adjust the value based on the height of your header */
+  
+  &.dark {
+    background-color: $tertiary;
+    border-color: $primary; /* Adjust border color as needed */
   }
+
+  .grid {
+    height: 100%;
+    max-width: 32rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+    
+
+    .inline-flex {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      &:hover {
+        background-color: $secondary_dark;
+        border-radius: 25px;
+      }
+
+    
+
+        a {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          
+          
+
+          Image {
+            filter: invert(44%) sepia(23%) saturate(2861%) hue-rotate(350deg) brightness(90%) contrast(89%);
+          }
+        }
+      }
+    }
+  }
+
