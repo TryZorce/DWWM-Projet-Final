@@ -1,35 +1,46 @@
-// UserContext.tsx
-import React, { createContext, useContext, ReactNode } from 'react';
+"use client"
 
-interface UserContextProps {
-  user: {
-    id: number;
-    username: string;
-    // Add other user-related fields as needed
-  } | null;
-  setUser: React.Dispatch<React.SetStateAction<{
-    id: number;
-    username: string;
-    // Add other user-related fields as needed
-  } | null>>;
-}
+import {createContext, useEffect, useState} from "react";
+import {jwtDecode} from "jwt-decode";
 
-const UserContext = createContext<UserContextProps | undefined>(undefined);
+// Initialise le context
+export const AppContext = createContext();
 
-export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = React.useState<UserContextProps['user']>(null);
+// Le context en lui même
+export default function AppContextProvider({ children }) {
+  const [authenticatedUser, setAuthenticatedUser] = useState(false)
+  const [authLoading, setAuthLoading] = useState(true)
 
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
+  console.log('hello')
 
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
+  const localStoredToken = localStorage.getItem('token')
+
+  useEffect(() => {
+    if (localStoredToken) {
+      try {
+        const decodedToken = jwtDecode(localStoredToken)
+
+        if (decodedToken.exp < new Date().getTime()) {
+          setAuthenticatedUser(true)
+          setAuthLoading(false)
+        } else {
+          setAuthenticatedUser(false)
+          setAuthLoading(false)
+        }
+
+      } catch (error) {
+        console.log('TOKEN BROKEN')
+      }
+    } else {
+      setAuthenticatedUser(false)
+      setAuthLoading(false)
+    }
+  }, [])
+
+  const sharedValues = {
+    authenticatedUser,
+    authLoading
   }
-  return context;
-};
+
+  return <AppContext.Provider value={sharedValues}>{children}</AppContext.Provider>
+}

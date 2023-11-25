@@ -34,18 +34,16 @@ const SignupForm: React.FC = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:8000/api/users', {
+      const response = await fetch('http://localhost:8002/api/users', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
         },
         body: JSON.stringify(user),
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
-
         setSuccess(true);
         setUser({
           name: '',
@@ -54,6 +52,9 @@ const SignupForm: React.FC = () => {
           phone: '',
         });
         setError(null);
+
+        // Enregistre le token dans le local storage
+        localStorage.setItem('token', responseData.token)
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Erreur lors de l\'inscription');

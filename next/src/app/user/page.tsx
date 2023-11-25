@@ -16,7 +16,7 @@ const Login = () => {
       const response = await fetch('https://localhost/api/login_check', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
         },
         body: JSON.stringify(credentials),
       });
