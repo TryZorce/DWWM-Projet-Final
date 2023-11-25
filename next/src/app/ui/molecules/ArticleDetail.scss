@@ -1,0 +1,74 @@
+@import '../../../theme/variables.scss';
+.article-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid white;
+  }
+  
+  .loading-message {
+    color: $message_info;
+    font-size: 18px;
+  }
+  
+  .error-message {
+    color: $error;
+    font-size: 18px;
+  }
+  
+  .no-article-message {
+    color: $message_info;
+    font-size: 18px;
+  }
+  
+  .article-image {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .article-name{
+    margin-bottom: 10px;
+  }
+  .article-description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  
+  .article-container2{
+    display: flex;
+    flex-direction: row;
+    color: $tertiary;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .article-stock {
+    margin-left: 10px;
+  }
+  
+  /* Styles for the input and button */
+  input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    color: $black;
+  }
+  
+  button {
+    background-color: $primary;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: $primary_light;
+  }
+  

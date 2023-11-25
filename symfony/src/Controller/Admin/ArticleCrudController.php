@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -21,9 +22,10 @@ class ArticleCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
-            TextEditorField::new('description'),
+            TextField::new('description'),
             NumberField::new('price'),
             NumberField::new('stock'),
+            AssociationField::new('category_id'),
             ImageField::new('image')
                 ->setBasePath('/images')
                 ->setUploadDir('public/images')
