@@ -1,53 +1,47 @@
 "use client"
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 import './LoginForm.scss';
 
-interface LoginUser {
-  email: string;
-  password: string;
-}
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-const LoginForm: React.FC = () => {
-  const [loginUser, setLoginUser] = useState<LoginUser>({
-    email: '',
-    password: '',
-  });
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginUser({ ...loginUser, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-
+  const handleLogin = async () => {
     try {
-      if (!loginUser.email || !loginUser.password) {
-        setError('Veuillez remplir tous les champs.');
+      setLoading(true);
+      setError('');
+
+      // Validation des entrées (exemple : vérification que les champs ne sont pas vides)
+      if (!username || !password) {
+        setError('Veuillez saisir le nom d\'utilisateur et le mot de passe.');
         return;
       }
 
-      const response = await fetch('http://localhost:8000/api/', {
+      const response = await fetch('http://localhost:8000/api/login_check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(loginUser),
+        body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
-        // Handle successful login, e.g., redirect to another page
-        console.log('Login successful');
+        const data = await response.json();
+        console.log(data);
+
+        // Mettre le token dans le localStorage
+        localStorage.setItem('token', data.token);
+
+        // Rediriger l'utilisateur vers la page appropriée après la connexion réussie
+        window.location.href = '/user';
       } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Erreur lors de la connexion');
+        setError('Identifiants incorrects. Veuillez réessayer.');
       }
     } catch (error) {
-      console.error('Erreur lors de la connexion', error);
-      setError('Erreur lors de la connexion');
+      console.error('Erreur lors de la requête :', error);
+      setError('Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
@@ -55,17 +49,28 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="login-form">
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <h1>Connexion</h1>
+      <form>
         <label>
-          Email:
-          <input type="email" name="email" value={loginUser.email} onChange={handleChange} />
+          Mail : 
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </label>
+        <br />
         <label>
-          Password:
-          <input type="password" name="password" value={loginUser.password} onChange={handleChange} />
+          Mot de passe:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </label>
-        <button type="submit" disabled={loading}>
+        <br />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button type="button" onClick={handleLogin} disabled={loading}>
           {loading ? 'En cours...' : 'Se connecter'}
         </button>
       </form>
@@ -73,4 +78,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default Login;

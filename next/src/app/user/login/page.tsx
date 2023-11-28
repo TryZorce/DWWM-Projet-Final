@@ -8,7 +8,7 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <LoginForm />
+      <LoginForm/>
       <Link href="/user/register">S'enregistrer</Link>
       <Footer />
     </div>

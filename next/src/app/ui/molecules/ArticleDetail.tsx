@@ -55,30 +55,33 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   const addToCart = () => {
     if (article) {
       const updatedCart = [...cart];
-      const existingItem = updatedCart.find((item) => item.id === article.id);
+      const existingItemIndex = updatedCart.findIndex((item) => item.id === article.id);
 
-      if (existingItem) {
-        // Si l'article est déjà dans le panier, mettez à jour la quantité
-        existingItem.quantity += quantity;
+      if (existingItemIndex !== -1) {
+        // If the article is already in the cart, update the quantity
+        updatedCart[existingItemIndex].quantity += quantity;
       } else {
-        // Sinon, ajoutez l'article avec la quantité
+        // Otherwise, add the article with the quantity
         updatedCart.push({ ...article, quantity });
       }
 
-      // Mettez à jour l'état du panier
+      // Update the cart state
       setCart(updatedCart);
 
-      // Ajoutez votre logique pour envoyer le panier au serveur Symfony
-      // Vous pouvez utiliser une API fetch pour cela
+      // Add your logic to send the cart to the Symfony server
+      // You can use the fetch API for this purpose
       fetch('http://localhost:8000/api/carts', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
         },
         body: JSON.stringify(updatedCart),
       });
 
       console.log(`Article added to the cart: ${article.name}, Quantity: ${quantity}`);
+    } else {
+      // Handle the case where article is null
+      console.error("Article is null. Unable to add to cart.");
     }
   };
 

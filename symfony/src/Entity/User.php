@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Post;
 use App\Controller\SignUpController;
 use App\Repository\UserRepository;
@@ -18,11 +19,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
         new Post(
             controller: SignUpController::class
         ),
-        new Get(
-
-        ),
     ]
 )]
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['email' => 'exact'])]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {

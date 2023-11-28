@@ -73,19 +73,19 @@ const SignupForm: React.FC = () => {
       {success && <p style={{ color: 'green' }}>Inscription réussie !</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Full Name:
+          Identifiant : *
           <input type="text" name="name" value={user.name} onChange={handleChange} />
         </label>
         <label>
-          Email:
+          Email: *
           <input type="email" name="email" value={user.email} onChange={handleChange} />
         </label>
         <label>
-          Phone:
+          Téléphone:
           <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
         </label>
         <label>
-          Password:
+          Mot de passe: *
           <input type="password" name="password" value={user.password} onChange={handleChange} />
         </label>
         <button type="submit" disabled={loading}>
