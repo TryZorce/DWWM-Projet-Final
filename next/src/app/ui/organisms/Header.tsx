@@ -29,7 +29,7 @@ const Header = () => {
               height={32}
             />
           </Link>
-          <Link href='/user'>
+          <Link href='/user/login'>
             <Image
               src='/icons/User.png'
               alt='User Icon'
