@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Controller\SignUpController;
 use App\Repository\UserRepository;
@@ -16,6 +17,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
     operations: [
         new Post(
             controller: SignUpController::class
+        ),
+        new Get(
+
         ),
     ]
 )]
