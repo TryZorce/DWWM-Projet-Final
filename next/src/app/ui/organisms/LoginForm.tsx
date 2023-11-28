@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:8000/api/login', {
+      const response = await fetch('http://localhost:8000/api/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
