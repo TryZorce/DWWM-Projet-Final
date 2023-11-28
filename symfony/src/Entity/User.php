@@ -12,7 +12,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Post(
+            controller: SignUpController::class
+        ),
+    ]
+)]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
