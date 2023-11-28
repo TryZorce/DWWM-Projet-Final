@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ArticleDetail.scss';
 
 interface Article {
+  quantity: number;
   id: number;
   name: string;
   description: string;
@@ -15,6 +16,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [cart, setCart] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -45,14 +47,39 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
     fetchArticle();
   }, [id]);
 
-  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newQuantity = parseInt(event.target.value, 10);
     setQuantity(newQuantity);
   };
 
   const addToCart = () => {
-    // Ajoutez votre logique pour ajouter l'article au panier ici
-    console.log(`Article added to the cart: ${article?.name}, Quantity: ${quantity}`);
+    if (article) {
+      const updatedCart = [...cart];
+      const existingItem = updatedCart.find((item) => item.id === article.id);
+
+      if (existingItem) {
+        // Si l'article est déjà dans le panier, mettez à jour la quantité
+        existingItem.quantity += quantity;
+      } else {
+        // Sinon, ajoutez l'article avec la quantité
+        updatedCart.push({ ...article, quantity });
+      }
+
+      // Mettez à jour l'état du panier
+      setCart(updatedCart);
+
+      // Ajoutez votre logique pour envoyer le panier au serveur Symfony
+      // Vous pouvez utiliser une API fetch pour cela
+      fetch('http://localhost:8000/api/carts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCart),
+      });
+
+      console.log(`Article added to the cart: ${article.name}, Quantity: ${quantity}`);
+    }
   };
 
   if (loading) {
@@ -73,18 +100,18 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
       <h1 className='article-name'>{article.name}</h1>
       <p className="article-description">Description : {article.description}</p>
       <div className='article-container2'>
-      <p className="article-price">Prix : {article.price} €</p>
-      <p className="article-stock">Stock : {article.stock}</p>
+        <p className="article-price">Prix : {article.price} €</p>
+        <p className="article-stock">Stock : {article.stock}</p>
       </div>
       <p>
         Quantité :
-        <input
-          type="number"
-          min="1"
-          max={article.stock}
-          value={quantity}
-          onChange={handleQuantityChange}
-        />
+        <select value={quantity} onChange={handleQuantityChange}>
+          {Array.from({ length: article.stock }, (_, index) => index + 1).map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
       </p>
 
       <button onClick={addToCart}>Ajouter au panier</button>

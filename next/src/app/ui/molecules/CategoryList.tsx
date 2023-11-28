@@ -49,8 +49,8 @@ const CategoryList: React.FC = () => {
           <div key={category.id} className="category-item">
             <Link href={`/category/${category.id}`}>
               <div className='list-center'>
-                <img src={`${category.image}`} alt={category.categoryname} className="image" />
                 <p>{category.categoryname}</p>
+                <img src={`${category.image}`} alt={category.categoryname} className="image" />
               </div>
             </Link>
           </div>
