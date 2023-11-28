@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from '@/ui/organisms/LoginForm'; // Replace 'path-to-your' with the actual path to the LoginForm component
+import LoginForm from '@/ui/organisms/LoginForm';
 import Footer from '@/ui/organisms/Footer';
 import Header from '@/ui/organisms/Header';
 import Link from 'next/link';
