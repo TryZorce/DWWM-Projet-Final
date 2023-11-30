@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import './LoginForm.scss';
+import Link from 'next/link';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -52,7 +53,7 @@ const Login = () => {
       <h1>Connexion</h1>
       <form>
         <label>
-          Mail : 
+          Mail :
           <input
             type="text"
             value={username}
@@ -70,9 +71,13 @@ const Login = () => {
         </label>
         <br />
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="button" onClick={handleLogin} disabled={loading}>
-          {loading ? 'En cours...' : 'Se connecter'}
-        </button>
+        <div className="button-container">
+          <button type="button" onClick={handleLogin} disabled={loading}>
+            {loading ? 'En cours...' : 'Se connecter'}
+          </button>
+          <Link className="Link" href="/user/register">S'enregistrer
+          </Link>
+        </div>
       </form>
     </div>
   );

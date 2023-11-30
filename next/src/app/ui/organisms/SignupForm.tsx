@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import './SignupForm.scss';
+import Link from 'next/link';
 
 interface User {
   name: string;

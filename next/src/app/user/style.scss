@@ -1,0 +1,27 @@
+@import '../../theme/variables.scss';
+
+.user-profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $white; 
+  border: 1px solid $gray; 
+  border-radius: 8px;
+  margin-top: 100px;
+
+  & h1 {
+    color: $primary;
+    margin-bottom: 20px;
+  }
+
+  & p {
+    margin-bottom: 10px;
+    color: $tertiary; 
+  }
+}
+
+.error-message, .loading-message {
+  color: $gray_dark;
+  text-align: center;
+  margin-top: 20px;
+}

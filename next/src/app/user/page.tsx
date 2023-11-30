@@ -1,6 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import './style.scss'
+import Header from '@/ui/organisms/Header';
+import Footer from '@/ui/organisms/Footer';
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -47,26 +50,31 @@ const UserProfile: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <p>Chargement...</p>;
+    return <p className="loading-message">Chargement...</p>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="error-message">{error}</p>;
   }
 
   if (!user || user.length === 0) {
-    return <p>Aucun utilisateur trouvé.</p>;
+    return <p className="error-message">Aucun utilisateur trouvé.</p>;
   }
 
-  // Supposons que vous voulez afficher les informations du premier utilisateur
   const firstUser = user[0];
 
   return (
-    <div>
+    <>
+    <Header/>
+    <div className="user-profile-container">
       <h1>Profil de l'utilisateur</h1>
       <p>Nom: {firstUser.name}</p>
       <p>Email: {firstUser.email}</p>
+      <p>Role: {firstUser.roles[0]}</p>
+      <p>Téléphone: {firstUser.phone}</p>
     </div>
+    <Footer/>
+    </>
   );
 };
 
