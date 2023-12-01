@@ -33,24 +33,18 @@
 .header-right {
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: auto; /* Move the right side to the right edge */
+  margin-right: 20px;
+
+  /* Adjust the margin between icons */
+  a:not(:last-child) {
+    margin-right: 30px; /* Increase the spacing between icons to 30px */
+  }
 }
 
 /* Media Queries for small screens (e.g., smartphones) */
-@media (max-width: 576px) {
-  .header-left,
+@media (max-width: 768px) {
   .header-right {
-    width: 100%;
-    text-align: center;
-    margin: 0;
+    display: none; /* Hide only the header-right on smaller screens */
   }
-
-  .header-right {
-    margin-top: 10px;
-  }
-}
-
-/* Add margin to the body to account for the fixed header */
-body {
-  margin-top: 100px; /* Adjust the value based on the height of your header */
 }

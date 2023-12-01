@@ -43,58 +43,58 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Symfony');
+            ->setTitle('Savonnerie LB');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
-        yield MenuItem::subMenu("User")
+        yield MenuItem::subMenu("Utilisateur")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-users', User::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-users', User::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-user-plus', User::class)
                     ->setAction('new')
             ]);
     
         yield MenuItem::subMenu("Article")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-newspaper', Article::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-newspaper', Article::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Article::class)
                     ->setAction('new')
             ]);
     
         yield MenuItem::subMenu("Categorie")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-list', Categorie::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-list', Categorie::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Categorie::class)
                     ->setAction('new')
             ]);
     
-        yield MenuItem::subMenu("Cart")
+        yield MenuItem::subMenu("Panier")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-shopping-cart', Cart::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-shopping-cart', Cart::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-cart-plus', Cart::class)
                     ->setAction('new')
             ]);
     
-        yield MenuItem::subMenu("Invoice")
+        yield MenuItem::subMenu("Facture")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-file-invoice', Invoice::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-file-invoice', Invoice::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Invoice::class)
                     ->setAction('new')
             ]);
     
         yield MenuItem::subMenu("Message")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-envelope', Message::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-envelope', Message::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Message::class)
                     ->setAction('new')
             ]);
     
         yield MenuItem::subMenu("Promotion")
             ->setSubItems([
-                MenuItem::linkToCrud('List', 'fas fa-percent', Promotion::class),
+                MenuItem::linkToCrud('Liste', 'fas fa-percent', Promotion::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Promotion::class)
                     ->setAction('new')
             ]);
