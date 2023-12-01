@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import './SignupForm.scss';
-import Link from 'next/link';
 
 interface User {
   name: string;
@@ -74,19 +73,19 @@ const SignupForm: React.FC = () => {
       {success && <p style={{ color: 'green' }}>Inscription réussie !</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Identifiant : *
+          Full Name:
           <input type="text" name="name" value={user.name} onChange={handleChange} />
         </label>
         <label>
-          Email: *
+          Email:
           <input type="email" name="email" value={user.email} onChange={handleChange} />
         </label>
         <label>
-          Téléphone:
+          Phone:
           <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
         </label>
         <label>
-          Mot de passe: *
+          Password:
           <input type="password" name="password" value={user.password} onChange={handleChange} />
         </label>
         <button type="submit" disabled={loading}>

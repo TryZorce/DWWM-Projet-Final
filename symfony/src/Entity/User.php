@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource]
 #[ApiResource(
     operations: [
         new Post(
@@ -21,7 +22,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
         ),
     ]
 )]
-#[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['email' => 'exact'])]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
