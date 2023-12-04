@@ -11,8 +11,7 @@ interface Article {
   quantity: number;
 }
 
-interface CartPageProps {
-}
+interface CartPageProps {}
 
 const CartPage: React.FC<CartPageProps> = (props) => {
   const [cart, setCart] = useState<Article[]>(JSON.parse(localStorage.getItem('cart') || '[]'));
@@ -27,8 +26,11 @@ const CartPage: React.FC<CartPageProps> = (props) => {
   };
 
   const handleQuantityChange = (index: number, newQuantity: number) => {
+    // Assurez-vous que la nouvelle quantité est au moins égale à zéro
+    const validQuantity = Math.max(0, newQuantity);
+
     const updatedCart = [...cart];
-    updatedCart[index].quantity = newQuantity;
+    updatedCart[index].quantity = validQuantity;
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
