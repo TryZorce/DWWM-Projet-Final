@@ -1,50 +1,83 @@
 @import '../../../theme/variables.scss';
 
-form {
+.background-login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(../../../../public/img/login.jpg);
+  background-size: cover;
+  z-index: -1;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: $secondary;
+  margin-top: 200px;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 100px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
-    
-  
-    label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 10px;
+    margin-bottom: 10px;
 
-
-  
-      input {
-        width: 100%;
-        padding: 8px;
-        margin-top: 4px;
-        box-sizing: border-box;
-      border: 1px $gray solid !important;
-
-      }
-    }
-  
-    button {
-      background-color: $primary !important;
-      color: white;
-      margin-top: 30px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-  
-      &:hover {
-        background-color: $primary;
-      }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+      border: 1px $gray solid;
     }
   }
-  
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button{
+    background-color: $primary;
+    color: white;
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 80px;
+
+    &:hover {
+      background-color: darken($primary, 10%);
+    }
+  }
+
+  .Link {
+    margin-top: 40px;
+    background-color: unset;
+    color: $primary;
+
+    &:hover {
+      background-color: unset;
+    }
+  }
+
+  .auth-links-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

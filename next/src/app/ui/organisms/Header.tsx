@@ -1,11 +1,13 @@
-// Header.tsx
-import React from 'react';
-import SearchBar from '../organisms/Searchbar';
+"use client"
+import React, { useContext } from 'react';
 import Image from 'next/image';
-import './Header.scss';
 import Link from 'next/link';
+import { AppContext } from '@/AppContext';
+import "./Header.scss"
 
 const Header = () => {
+  const { authenticatedUser } = useContext(AppContext);
+
   return (
     <header className="header">
       <div className="header-content">
@@ -20,7 +22,6 @@ const Header = () => {
           </Link>
         </div>
         <div className="header-right">
-          {/* Add the Footer icons here for desktop screens */}
           <Link href='/'>
             <Image
               src='/icons/House.png'
@@ -29,14 +30,25 @@ const Header = () => {
               height={32}
             />
           </Link>
-          <Link href='/user/login'>
-            <Image
-              src='/icons/User.png'
-              alt='User Icon'
-              width={32}
-              height={32}
-            />
-          </Link>
+          {authenticatedUser ? (
+            <Link href='/user'>
+              <Image
+                src='/icons/User.png'
+                alt='User Icon'
+                width={32}
+                height={32}
+              />
+            </Link>
+          ) : (
+            <Link href='/user/login'>
+              <Image
+                src='/icons/User.png'
+                alt='User Icon'
+                width={32}
+                height={32}
+              />
+            </Link>
+          )}
           <Link href='/cart'>
             <Image
               src='/icons/Cart.png'

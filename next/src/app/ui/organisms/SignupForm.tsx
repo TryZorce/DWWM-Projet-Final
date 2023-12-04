@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import './SignupForm.scss';
+import Link from 'next/link';
 
 interface User {
   name: string;
@@ -68,30 +69,39 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>Inscription réussie !</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Full Name:
-          <input type="text" name="name" value={user.name} onChange={handleChange} />
-        </label>
-        <label>
-          Email:
-          <input type="email" name="email" value={user.email} onChange={handleChange} />
-        </label>
-        <label>
-          Phone:
-          <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" value={user.password} onChange={handleChange} />
-        </label>
-        <button type="submit" disabled={loading}>
-          {loading ? 'En cours...' : 'S\'inscrire'}
-        </button>
-      </form>
+    <div className='background-login'>
+      <div className='register-form'>
+        <h1 className='register-title'>Inscription :</h1>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>Inscription réussie !</p>}
+        <form onSubmit={handleSubmit}>
+          <label>
+            Full Name:
+            <input type="text" name="name" value={user.name} onChange={handleChange} />
+          </label>
+          <label>
+            Email:
+            <input type="email" name="email" value={user.email} onChange={handleChange} />
+          </label>
+          <label>
+            Phone:
+            <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
+          </label>
+          <label>
+            Password:
+            <input type="password" name="password" value={user.password} onChange={handleChange} />
+          </label>
+          <button type="submit" disabled={loading}>
+            {loading ? 'En cours...' : 'S\'inscrire'}
+          </button>
+        </form>
+        <div className='auth-links-container'>
+          <Link href="/user/login">
+            <p className="Link">Se connecter</p>
+          </Link>
+        </div>
+
+      </div>
     </div>
   );
 };

@@ -49,36 +49,38 @@ const Login = () => {
   };
 
   return (
-    <div className="login-form">
-      <h1>Connexion</h1>
-      <form>
-        <label>
-          Mail :
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Mot de passe:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <div className="button-container">
-          <button type="button" onClick={handleLogin} disabled={loading}>
-            {loading ? 'En cours...' : 'Se connecter'}
-          </button>
-          <Link className="Link" href="/user/register">S'enregistrer
-          </Link>
-        </div>
-      </form>
+    <div className='background-login'>
+      <div className="login-form">
+        <h1>Connexion :</h1>
+        <form>
+          <label>
+            Mail :
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            Mot de passe:
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <br />
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <div className="button-container">
+            <button type="button" onClick={handleLogin} disabled={loading}>
+              {loading ? 'En cours...' : 'Se connecter'}
+            </button>
+            <Link className="Link" href="/user/register">S'enregistrer
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

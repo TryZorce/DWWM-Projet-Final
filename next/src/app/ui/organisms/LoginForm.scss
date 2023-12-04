@@ -1,5 +1,15 @@
-// LoginForm.scss
 @import '../../../theme/variables.scss';
+
+.background-login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(../../../../public/img/login.jpg);
+  background-size: cover;
+  z-index: -1;
+}
 
 .login-form {
   display: flex;
@@ -7,11 +17,16 @@
   align-items: center;
   max-width: 400px;
   margin: 0 auto;
-  margin-top: 100px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: $secondary;
+  margin-top: 200px;
+
+  h1 {
+    margin-bottom: 20px;
+  }
 
   label {
     display: flex;
@@ -52,8 +67,11 @@
 
   .Link {
     margin-top: 40px;
-    margin-left: auto;
     background-color: unset;
-    color: $info;
+    color: $primary;
+
+    &:hover {
+      background-color: unset;
+    }
   }
 }
