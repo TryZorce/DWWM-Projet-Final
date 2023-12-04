@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
-
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact'])]
 class Article
 {
     #[ORM\Id]

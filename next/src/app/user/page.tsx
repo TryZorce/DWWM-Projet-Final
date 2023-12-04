@@ -1,9 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import './style.scss'
 import Header from '@/ui/organisms/Header';
 import Footer from '@/ui/organisms/Footer';
+import './style.scss';
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -13,15 +13,12 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Récupérer le token depuis le localStorage
         const token = localStorage.getItem('token');
 
         if (token) {
-          // Décoder le token pour obtenir l'adresse e-mail
           const decodedToken: any = jwtDecode(token);
           const userEmail = decodedToken.username;
 
-          // Utiliser l'adresse e-mail pour récupérer les informations de l'utilisateur
           const response = await fetch(`http://localhost:8000/api/users?page=1&email=${userEmail}`, {
             method: 'GET',
             headers: {
@@ -31,7 +28,7 @@ const UserProfile: React.FC = () => {
 
           if (response.ok) {
             const data = await response.json();
-            setUser(data['hydra:member']); // Accéder à la liste d'utilisateurs
+            setUser(data['hydra:member']);
             setLoading(false);
           } else {
             throw new Error(`Erreur réseau: ${response.status} - ${response.statusText}`);
@@ -49,32 +46,41 @@ const UserProfile: React.FC = () => {
     fetchUserData();
   }, []);
 
+  const handleClearLocalStorage = () => {
+    localStorage.clear();
+    window.location.href = '/';
+  };
+
   if (loading) {
-    return <p className="loading-message">Chargement...</p>;
+    return <p>Chargement...</p>;
   }
 
   if (error) {
-    return <p className="error-message">{error}</p>;
+    return <p>{error}</p>;
   }
 
   if (!user || user.length === 0) {
-    return <p className="error-message">Aucun utilisateur trouvé.</p>;
+    return <p>Aucun utilisateur trouvé.</p>;
   }
 
   const firstUser = user[0];
 
   return (
-    <>
-    <Header/>
-    <div className="user-profile-container">
-      <h1>Profil de l'utilisateur</h1>
-      <p>Nom: {firstUser.name}</p>
-      <p>Email: {firstUser.email}</p>
-      <p>Role: {firstUser.roles[0]}</p>
-      <p>Téléphone: {firstUser.phone}</p>
+    <div className='user-profile-container'>
+      <Header />
+      <div className='container'>
+        <h1>Profil de l'utilisateur</h1>
+        <p>Nom: {firstUser.name}</p>
+        <p>Email: {firstUser.email}</p>
+      </div>
+      <div className='logout-button-container'>
+        <button className='logout-button' onClick={handleClearLocalStorage}>
+          Ce déconnecter
+        </button>
+      </div>
+      <Footer />
     </div>
-    <Footer/>
-    </>
+
   );
 };
 

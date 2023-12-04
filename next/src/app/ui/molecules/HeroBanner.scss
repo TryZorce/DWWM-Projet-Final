@@ -1,6 +1,7 @@
 @import '../../../theme/variables.scss';
 .hero-banner {
   position: relative;
+  
 }
 
 .overlay-text {
@@ -12,12 +13,10 @@
   font-weight: bold;
   color: $tertiary;
   text-align: center;
-  // Ajoute d'autres styles selon tes préférences
 }
 
 .hero-banner img {
   width: 100%;
   height: auto;
   transition: transform 0.5s ease-in-out;
-  // Ajoute d'autres styles selon tes préférences
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './ArticleDetail.scss';
 
 interface Article {
-  quantity: number;
   id: number;
   name: string;
   description: string;
@@ -16,7 +15,6 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [cart, setCart] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -53,35 +51,23 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   };
 
   const addToCart = () => {
-    if (article) {
-      const updatedCart = [...cart];
-      const existingItemIndex = updatedCart.findIndex((item) => item.id === article.id);
+    if (article && article.stock > 0 && quantity > 0) {
+      const updatedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const existingItemIndex = updatedCart.findIndex((item: Article) => item.id === article.id);
 
       if (existingItemIndex !== -1) {
-        // If the article is already in the cart, update the quantity
         updatedCart[existingItemIndex].quantity += quantity;
       } else {
-        // Otherwise, add the article with the quantity
         updatedCart.push({ ...article, quantity });
       }
 
-      // Update the cart state
-      setCart(updatedCart);
-
-      // Add your logic to send the cart to the Symfony server
-      // You can use the fetch API for this purpose
-      fetch('http://localhost:8000/api/carts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/ld+json',
-        },
-        body: JSON.stringify(updatedCart),
-      });
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
 
       console.log(`Article added to the cart: ${article.name}, Quantity: ${quantity}`);
+    } else if (quantity <= 0) {
+      console.error("La quantité doit être supérieure à zéro.");
     } else {
-      // Handle the case where article is null
-      console.error("Article is null. Unable to add to cart.");
+      console.error("Article is null or out of stock. Unable to add to cart.");
     }
   };
 
@@ -99,25 +85,37 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <div className="article-container">
-      <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="article-image" />
+      <img
+        src={`http://127.0.0.1:8000/images/${article.image}`}
+        alt={article.name}
+        className="article-image"
+      />
       <h1 className='article-name'>{article.name}</h1>
       <p className="article-description">Description : {article.description}</p>
       <div className='article-container2'>
         <p className="article-price">Prix : {article.price} €</p>
-        <p className="article-stock">Stock : {article.stock}</p>
+        <p className="article-stock">Stock : {article.stock === 0 ? 'Hors Stock' : article.stock}</p>
       </div>
-      <p>
-        Quantité :
-        <select value={quantity} onChange={handleQuantityChange}>
-          {Array.from({ length: article.stock }, (_, index) => index + 1).map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </p>
+      {article.stock > 0 ? (
+        <p>
+          Quantité :
+          <select value={quantity} onChange={handleQuantityChange} className="quantity-select">
+            {Array.from({ length: article.stock }, (_, index) => index + 1).map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </p>
+      ) : null}
 
-      <button onClick={addToCart}>Ajouter au panier</button>
+      {article.stock > 0 ? (
+        <button onClick={addToCart} className="add-to-cart-button">
+          Ajouter au panier
+        </button>
+      ) : (
+        <p className="out-of-stock-message">Cet article est actuellement en rupture de stock.</p>
+      )}
     </div>
   );
 };

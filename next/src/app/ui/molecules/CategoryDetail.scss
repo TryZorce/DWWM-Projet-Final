@@ -1,74 +1,64 @@
 @import '../../../theme/variables.scss';
 .category-container {
-    /* Styles for the entire category container */
     margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;
+    margin-top: 100px;
+    margin-bottom: 100px;
   }
   
   .loading-message {
-    /* Styles for the loading message */
     color: #999;
     font-size: 18px;
   }
   
   .error-message {
-    /* Styles for the error message */
     color: #ff0000;
     font-size: 18px;
   }
   
   .no-info-message {
-    /* Styles for the message when no category information is found */
     color: #999;
     font-size: 18px;
   }
   
   .category-info {
-    /* Styles for the category information section */
     margin-bottom: 20px;
   }
   
   .category-info h2 {
-    /* Styles for the category name */
     font-size: 24px;
     margin-bottom: 10px;
   }
   
   .category-info img {
-    /* Styles for the category image */
     max-width: 100%;
     height: auto;
   }
   
   .article-list {
-    /* Styles for the article list */
     list-style: none;
     padding: 0;
   }
   
   .article-item {
-    /* Styles for each article item */
     margin-bottom: 20px;
   }
   
   .article-image {
-    /* Styles for the article image */
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
   }
   
   .article-description {
-    /* Styles for the article description */
     font-size: 16px;
     line-height: 1.5;
   }
   
   .article-price {
-    /* Styles for the article price */
     font-size: 18px;
     font-weight: bold;
-    color: black; /* Blue color, you can change it */
+    color: black;
   }
   
