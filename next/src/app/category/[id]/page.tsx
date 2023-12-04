@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CategoryPage from '@/ui/molecules/CategoryDetail';
 import Header from '@/ui/organisms/Header';
 import Footer from '@/ui/organisms/Footer';
+import SearchBar from '@/ui/organisms/Searchbar';
 
 const IdDetail = ({ params }) => {
   const { id } = params;
@@ -14,6 +15,7 @@ const IdDetail = ({ params }) => {
   return (
     <>
     <Header />
+    <SearchBar/>
     <CategoryPage categoryId={id} />
     <Footer /></>
     )

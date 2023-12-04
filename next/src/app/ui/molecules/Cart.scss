@@ -1,42 +1,108 @@
+@import '../../../theme/variables.scss';
+
 .cart-container {
-    text-align: center;
-    padding: 20px;
-    margin-top: 100px;
-  }
-  
-  .cart-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .cart-item-image {
-    max-width: 80px;
-    height: auto;
+  background-color: $white;
+  color: $black;
+  padding: 20px;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.cart-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid $gray;
+  border-radius: 8px;
+}
+
+.cart-item-image {
+  max-width: 100%;
+  height: auto;
+  margin-right: 10px;
+}
+
+.cart-item-details {
+  flex: 1;
+  p {
+    margin: 0;
+    display: inline-block;
     margin-right: 10px;
   }
-  
-  .cart-item-details {
-    text-align: left;
-  }
-  
-  .cart-item-details p {
-    margin: 5px 0;
-  }
-  
-  .grand-total {
-    font-size: 18px;
-    margin-top: 20px;
-    color: #3498db;
+
+  .quantity-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid $secondary;
+    color: $black;
+    font-size: $font_size_h4;
+    transition: border-color 0.3s, color 0.3s;
   }
 
-  .commander-button {
-    background-color: #27ae60;
-    color: #fff;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
+  .quantity-input:focus {
+    border-color: $primary_focus;
+    color: $primary_focus;
   }
-  
+
+  .remove-button {
+    background-color: $danger;
+    color: $white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: $font_size_h4;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .remove-button:hover {
+    background-color: darken($danger, 10%);
+  }
+}
+
+@media (max-width: 770px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cart-item-details {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cart-item-image {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 771px) {
+  .cart-item {
+    flex-direction: row;
+  }
+
+  .cart-item-image {
+    margin-right: 20px;
+  }
+}
+
+.grand-total {
+  margin-top: 20px;
+  font-size: $font_size_h3;
+  color: $primary_dark;
+}
+
+.commander-button {
+  background-color: $primary;
+  color: $white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: $font_size_h3;
+  margin-top: 10px;
+}

@@ -26,11 +26,15 @@ const CartPage: React.FC<CartPageProps> = (props) => {
   };
 
   const handleQuantityChange = (index: number, newQuantity: number) => {
-    // Assurez-vous que la nouvelle quantité est au moins égale à zéro
-    const validQuantity = Math.max(0, newQuantity);
-
     const updatedCart = [...cart];
-    updatedCart[index].quantity = validQuantity;
+    updatedCart[index].quantity = Math.max(0, newQuantity);
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+  const handleRemoveItem = (index: number) => {
+    const updatedCart = [...cart];
+    updatedCart.splice(index, 1);
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
@@ -39,7 +43,6 @@ const CartPage: React.FC<CartPageProps> = (props) => {
     setCart([]);
     localStorage.removeItem('cart');
     console.log('Commande traitée avec succès !');
-
     window.location.href = '/invoice';
   };
 
@@ -69,6 +72,9 @@ const CartPage: React.FC<CartPageProps> = (props) => {
                   </p>
                   <p>Price: {item.price} €</p>
                   <p>Total: {calculateTotal(item).toFixed(2)} €</p>
+                  <button onClick={() => handleRemoveItem(index)} className="remove-button">
+                    Supprimer
+                  </button>
                 </div>
               </li>
             ))}

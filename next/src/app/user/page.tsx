@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import Header from '@/ui/organisms/Header';
 import Footer from '@/ui/organisms/Footer';
 import './style.scss';
+import Link from 'next/link';
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -66,19 +67,22 @@ const UserProfile: React.FC = () => {
   const firstUser = user[0];
 
   return (
-    <div className='user-profile-container'>
-      <Header />
-      <div className='container'>
-        <h1>Profil de l'utilisateur</h1>
-        <p>Nom: {firstUser.name}</p>
-        <p>Email: {firstUser.email}</p>
+    <div className='user-banner'>
+      <div className='user-profile-container'>
+        <Header />
+        <div className='container'>
+          <h1>Profil de l'utilisateur</h1>
+          <p>Nom: {firstUser.name}</p>
+          <p>Email: {firstUser.email}</p>
+          <Link className='user-commande' href='/mes-commandes'>Mes Commandes</Link>
+        </div>
+        <div className='logout-button-container'>
+          <button className='logout-button' onClick={handleClearLocalStorage}>
+            Ce déconnecter
+          </button>
+        </div>
+        <Footer />
       </div>
-      <div className='logout-button-container'>
-        <button className='logout-button' onClick={handleClearLocalStorage}>
-          Ce déconnecter
-        </button>
-      </div>
-      <Footer />
     </div>
 
   );

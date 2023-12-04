@@ -53,16 +53,16 @@ const SearchBar: React.FC = () => {
   }, [searchTerm]);
 
   return (
-    <div>
+    <div className="searchbar-container">
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Recherche..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className="searchbar-article-container">
         {error && <p>{error}</p>}
-        {searchTerm.trim() !== '' && searchResults.length === 0 && <p>No results found</p>}
+        {searchTerm.trim() !== '' && searchResults.length === 0 && <p>Pas de résultat trouvé</p>}
         {searchResults.length > 0 ? (
           searchResults.map((article) => (
             <div key={article.id} className="searchbar-article-item">

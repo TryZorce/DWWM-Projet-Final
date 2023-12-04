@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './ArticleDetail.scss';
+import React, { useContext, useState, useEffect } from 'react';
+import { AppContext } from '../../AppContext'; // Assurez-vous d'avoir le bon chemin vers votre AppContext
+import Link from 'next/link';
+import "./ArticleDetail.scss"
 
 interface Article {
   id: number;
@@ -11,6 +13,7 @@ interface Article {
 }
 
 const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
+  const { authenticatedUser } = useContext(AppContext);
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -109,12 +112,14 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
         </p>
       ) : null}
 
-      {article.stock > 0 ? (
+      {authenticatedUser ? (
         <button onClick={addToCart} className="add-to-cart-button">
           Ajouter au panier
         </button>
       ) : (
-        <p className="out-of-stock-message">Cet article est actuellement en rupture de stock.</p>
+        <Link href="/user/login">
+          <button className="login-button">Se connecter</button>
+        </Link>
       )}
     </div>
   );

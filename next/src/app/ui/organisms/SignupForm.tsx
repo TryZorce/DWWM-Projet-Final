@@ -22,13 +22,16 @@ const SignupForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
+  const emailRegex = /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
 
-    if (name === 'password' && !passwordRegex.test(value)) {
+    if (name === 'email' && !emailRegex.test(value)) {
+      setError('Veuillez entrer une adresse email valide.');
+    } else if (name === 'password' && !passwordRegex.test(value)) {
       setError('Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.');
     } else if (name === 'phone' && !/^\d{10}$/.test(value)) {
       setError('Le numéro de téléphone doit contenir exactement 10 chiffres.');
@@ -78,6 +81,11 @@ const SignupForm: React.FC = () => {
 
     if (!name || !email || !password || !phone) {
       setError('Veuillez remplir tous les champs.');
+      return false;
+    }
+
+    if (!emailRegex.test(email)) {
+      setError('Veuillez entrer une adresse email valide.');
       return false;
     }
 

@@ -1,25 +1,43 @@
 @import '../../../theme/variables.scss';
 
-
+.searchbar-container{
+  margin-top: 100px;
+}
 .searchbar-article-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 16px;
-}
 
-.searchbar-article-item {
-  width: 30%;
-  margin: 22px;
-  margin-bottom: 16px;
-  padding: 16px;
-  border: 1px solid #ddd; /* Add borders for better separation */
-  border-radius: 8px; /* Add rounded corners for a cleaner look */
-  box-sizing: border-box;
-  transition: background-color 0.3s ease;
+  .searchbar-article-item {
+    width: 30%;
+    margin: 22px;
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
 
-  &:hover {
-    background-color: #f5f5f5; /* Change background color on hover */
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .searchbar-article-item {
+      width: 48%;
+      margin: 8px;
+      margin-bottom: 8px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .searchbar-article-item {
+      width: 100%;
+      margin: 8px;
+      margin-bottom: 8px;
+    }
   }
 }
 
@@ -29,14 +47,12 @@
   align-items: center;
 }
 
-
 .searchbar-image {
   width: 80px;
   height: 80px;
   margin-left: 16px;
-  border-radius: 50%; /* Make the image circular */
+  border-radius: 50%;
 }
-
 
 input {
   width: 100%;
@@ -49,7 +65,7 @@ input {
 
   &:focus {
     outline: none;
-    border-color: #007bff; /* Highlight border color on focus */
+    border-color: #007bff;
   }
 }
 
@@ -57,7 +73,7 @@ p {
   margin: 0;
 }
 
-input{
+input {
   background-color: $white;
   color: $primary;
   border: 2px solid $gray;
