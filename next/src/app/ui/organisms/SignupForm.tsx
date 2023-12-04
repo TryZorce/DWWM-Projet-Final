@@ -10,35 +10,47 @@ interface User {
 }
 
 const SignupForm: React.FC = () => {
-  const [user, setUser] = useState<User>({
+  const initialUser: User = {
     name: '',
     email: '',
     password: '',
     phone: '',
-  });
+  };
 
+  const [user, setUser] = useState<User>(initialUser);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+
+    if (name === 'password' && !passwordRegex.test(value)) {
+      setError('Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.');
+    } else if (name === 'phone' && !/^\d{10}$/.test(value)) {
+      setError('Le numéro de téléphone doit contenir exactement 10 chiffres.');
+    } else {
+      setError(null);
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true);
 
     try {
-      if (!user.name || !user.email || !user.password || !user.phone) {
-        setError('Veuillez remplir tous les champs.');
-        return;
-      }
-
       const response = await fetch('http://localhost:8000/api/users', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/ld+json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(user),
       });
@@ -46,16 +58,9 @@ const SignupForm: React.FC = () => {
       if (response.ok) {
         const responseData = await response.json();
         setSuccess(true);
-        setUser({
-          name: '',
-          email: '',
-          password: '',
-          phone: '',
-        });
+        setUser(initialUser);
         setError(null);
-
-        // Enregistre le token dans le local storage
-        localStorage.setItem('token', responseData.token)
+        localStorage.setItem('token', responseData.token);
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Erreur lors de l\'inscription');
@@ -68,12 +73,34 @@ const SignupForm: React.FC = () => {
     }
   };
 
+  const validateForm = () => {
+    const { name, email, password, phone } = user;
+
+    if (!name || !email || !password || !phone) {
+      setError('Veuillez remplir tous les champs.');
+      return false;
+    }
+
+    if (!passwordRegex.test(password)) {
+      setError('Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.');
+      return false;
+    }
+
+    if (!/^\d{10}$/.test(phone)) {
+      setError('Le numéro de téléphone doit contenir exactement 10 chiffres.');
+      return false;
+    }
+
+    setError(null);
+    return true;
+  };
+
   return (
     <div className='background-login'>
       <div className='register-form'>
         <h1 className='register-title'>Inscription :</h1>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>Inscription réussie !</p>}
+        {error && <p className='error-message'>{error}</p>}
+        {success && <p className='success-message'>Inscription réussie !</p>}
         <form onSubmit={handleSubmit}>
           <label>
             Full Name:
@@ -100,7 +127,6 @@ const SignupForm: React.FC = () => {
             <p className="Link">Se connecter</p>
           </Link>
         </div>
-
       </div>
     </div>
   );

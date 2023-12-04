@@ -49,7 +49,7 @@ const Header = () => {
               />
             </Link>
           )}
-          <Link href='/cart'>
+          <Link href={authenticatedUser ? '/cart' : '/user/login'}>
             <Image
               src='/icons/Cart.png'
               alt='Cart Icon'
