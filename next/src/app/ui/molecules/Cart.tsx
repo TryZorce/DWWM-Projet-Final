@@ -12,9 +12,7 @@ interface Article {
   quantity: number;
 }
 
-interface CartPageProps {}
-
-const CartPage: React.FC<CartPageProps> = () => {
+const CartPage: React.FC = () => {
   const [cart, setCart] = useState<Article[]>(JSON.parse(localStorage.getItem('cart') || '[]'));
   const [userId, setUserId] = useState<number | null>(null);
   const [isUserIdLoading, setIsUserIdLoading] = useState(false);
@@ -38,25 +36,25 @@ const CartPage: React.FC<CartPageProps> = () => {
   const fetchUserId = async (username: string) => {
     try {
       setIsUserIdLoading(true);
-  
+
       const response = await fetch(`http://127.0.0.1:8000/api/users?page=1&email=${username}`);
-  
+
       if (!response.ok) {
         const responseBody = await response.text();
         throw new Error(`Erreur lors de la récupération de l'ID de l'utilisateur : ${response.status} ${response.statusText}. Réponse du serveur : ${responseBody}`);
       }
-  
+
       const userData = await response.json();
-  
+
       // Accédez au premier élément du tableau hydra:member
       const firstUser = userData['hydra:member'][0];
-  
+
       if (firstUser && typeof firstUser.id === 'number') {
         setUserId(firstUser.id);
       } else {
         console.error('ID d\'utilisateur non valide dans la réponse :', firstUser?.id);
       }
-    } catch (error: unknown) { // Typage explicite de l'objet error
+    } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
       } else {
@@ -98,6 +96,9 @@ const CartPage: React.FC<CartPageProps> = () => {
         if (decodedToken.username) {
           await fetchUserId(decodedToken.username);
 
+          // Extract article IDs from the local storage
+          const articleIds = cart.map((item) => `/api/articles/${item.id}`);
+          
           const response = await fetch('http://127.0.0.1:8000/api/carts', {
             method: 'POST',
             headers: {
@@ -106,6 +107,7 @@ const CartPage: React.FC<CartPageProps> = () => {
             body: JSON.stringify({
               quantity: 0,
               user: `/api/users/${userId}`,
+              articles: articleIds,
             }),
           });
 
