@@ -1,0 +1,50 @@
+.container-home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+  .title {
+    color: #333;
+    font-size: 2em;
+    margin: 20px;
+  }
+  
+  .intro {
+    font-size: 1.2em;
+    color: #555;
+    margin: 30px;
+  }
+  
+  .features {
+    list-style-type: none;
+    padding: 0;
+  
+    li {
+      margin-bottom: 8px;
+      font-weight: bold;
+      margin: 10px;
+  
+      &:before {
+        content: '\2022'; /* Utilisation du caractère • pour le bullet */
+        color: #ff9900; /* Couleur du bullet */
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+    }
+  }
+  
+  .description {
+    color: #666;
+    margin: 5px;
+  }
+  
+  .welcome {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #009688;
+    margin: 5px;
+  }
+  
