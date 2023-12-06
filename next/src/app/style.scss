@@ -3,6 +3,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto; /* Centre le contenu horizontalement */
+    max-width: 80%; /* Définit la largeur maximale du contenu */
+    padding: 20px;
 }
   
   .title {

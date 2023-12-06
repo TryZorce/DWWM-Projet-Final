@@ -43,7 +43,7 @@ const CategoryList: React.FC = () => {
 
   return (
     <div className="list-category-container">
-      <p>Catégorie :</p>
+      <p className='category'>Catégorie :</p>
       <div className="list-category">
         {categoryData.map((category) => (
           <div key={category.id} className="category-item">

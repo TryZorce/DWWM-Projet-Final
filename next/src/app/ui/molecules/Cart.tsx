@@ -46,7 +46,6 @@ const CartPage: React.FC = () => {
 
       const userData = await response.json();
 
-      // Accédez au premier élément du tableau hydra:member
       const firstUser = userData['hydra:member'][0];
 
       if (firstUser && typeof firstUser.id === 'number') {
@@ -96,7 +95,6 @@ const CartPage: React.FC = () => {
         if (decodedToken.username) {
           await fetchUserId(decodedToken.username);
 
-          // Extract article IDs from the local storage
           const articleIds = cart.map((item) => `/api/articles/${item.id}`);
           
           const response = await fetch('http://127.0.0.1:8000/api/carts', {
@@ -105,7 +103,6 @@ const CartPage: React.FC = () => {
               'Content-Type': 'application/ld+json',
             },
             body: JSON.stringify({
-              quantity: 0,
               user: `/api/users/${userId}`,
               articles: articleIds,
             }),
@@ -139,12 +136,17 @@ const CartPage: React.FC = () => {
         <p>{item.name}</p>
         <p>
           Quantity:{' '}
-          <input
-            type="number"
+          <select
             value={item.quantity}
             onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
-            className="quantity-input"
-          />
+            className="quantity-select"
+          >
+            {Array.from({ length: item.stock }, (_, idx) => idx + 1).map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
         </p>
         <p>Price: {item.price} €</p>
         <p>Total: {calculateTotal(item).toFixed(2)} €</p>

@@ -88,17 +88,20 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <div className="article-container">
+      <div className='image-wrapper'>
       <img
         src={`http://127.0.0.1:8000/images/${article.image}`}
         alt={article.name}
         className="article-image"
       />
+      </div>
+      <div className='article-wrapper'>
       <h1 className='article-name'>{article.name}</h1>
-      <p className="article-description">Description : {article.description}</p>
+      <p className="article-description">Description :</p>
+      <p className="article-description">{article.description}</p>
       <div className='article-container2'>
         <p className="article-price">Prix : {article.price} €</p>
         <p className="article-stock">Stock : {article.stock === 0 ? 'Hors Stock' : article.stock}</p>
-      </div>
       {article.stock > 0 ? (
         <p>
           Quantité :
@@ -111,16 +114,20 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
           </select>
         </p>
       ) : null}
+      </div>
 
-      {authenticatedUser ? (
-        <button onClick={addToCart} className="add-to-cart-button">
-          Ajouter au panier
-        </button>
-      ) : (
-        <Link href="/user/login">
-          <button className="login-button">Se connecter</button>
-        </Link>
-      )}
+      {authenticatedUser && article.stock > 0 ? (
+  <button onClick={addToCart} className="add-to-cart-button">
+    Ajouter au panier
+  </button>
+) : (
+  !authenticatedUser && (
+    <Link href="/user/login">
+      <button className="login-button">Se connecter</button>
+    </Link>
+  )
+)}
+      </div>
     </div>
   );
 };

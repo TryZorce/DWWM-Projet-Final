@@ -41,6 +41,10 @@ const UserProfile: React.FC = () => {
         console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
         setError('Erreur lors de la récupération des informations de l\'utilisateur');
         setLoading(false);
+
+        localStorage.removeItem('token');
+
+        window.location.href = '/user/login';
       }
     };
 
@@ -49,7 +53,8 @@ const UserProfile: React.FC = () => {
 
   const handleClearLocalStorage = () => {
     localStorage.clear();
-    window.location.href = '/';
+
+    window.location.href = '/user/login';
   };
 
   if (loading) {
@@ -57,11 +62,15 @@ const UserProfile: React.FC = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p>Une erreur s'est produite lors de la récupération des informations de l'utilisateur.</p>;
   }
 
   if (!user || user.length === 0) {
-    return <p>Aucun utilisateur trouvé.</p>;
+    localStorage.removeItem('token');
+
+    window.location.href = '/user/login';
+
+    return null;
   }
 
   const firstUser = user[0];
@@ -78,13 +87,12 @@ const UserProfile: React.FC = () => {
         </div>
         <div className='logout-button-container'>
           <button className='logout-button' onClick={handleClearLocalStorage}>
-            Ce déconnecter
+            Se déconnecter
           </button>
         </div>
         <Footer />
       </div>
     </div>
-
   );
 };
 

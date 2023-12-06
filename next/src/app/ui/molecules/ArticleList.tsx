@@ -4,6 +4,7 @@ import Link from 'next/link';
 import './ArticleList.scss';
 
 interface Article {
+  price: number;
   id: number;
   name: string;
   image: string;
@@ -54,15 +55,17 @@ const ArticlesPage: React.FC = () => {
           <div key={article.id} className="article-item">
             <Link href={`/article/${article.id}`}>
               <div className='list-center'>
-                <p>{article.name}</p>
                 <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="image" />
+                <p className='article-name'>{article.name}</p>
+                <p>{article.price} €</p>
               </div>
             </Link>
           </div>
         ))}
       </div>
     </div>
-  );
+  )
 };
+
 
 export default ArticlesPage;
