@@ -43,14 +43,14 @@ const CategoryList: React.FC = () => {
 
   return (
     <div className="list-category-container">
-      <p className='category'>Catégorie :</p>
+      <h2 className='category'>Catégorie :</h2>
       <div className="list-category">
         {categoryData.map((category) => (
           <div key={category.id} className="category-item">
             <Link href={`/category/${category.id}`}>
               <div className='list-center'>
                 <p>{category.categoryname}</p>
-                <img src={`${category.image}`} alt={category.categoryname} className="image" />
+                <img src={`http://127.0.0.1:8000/images/${category.image}`} className="image" />
               </div>
             </Link>
           </div>

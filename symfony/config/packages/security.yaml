@@ -27,6 +27,17 @@ security:
             security: false
         main:
             lazy: true
+            custom_authenticator: App\Security\AuthAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
@@ -39,6 +50,7 @@ security:
         - { path: ^/api/invoices, roles: PUBLIC_ACCESS }
         - { path: ^/api/promotions, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

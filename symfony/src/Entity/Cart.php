@@ -29,9 +29,13 @@ class Cart
     #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'cart_id')]
     private Collection $articles;
 
+    #[ORM\OneToMany(mappedBy: 'Cart', targetEntity: CartItem::class)]
+    private Collection $Article;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->Article = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,5 +94,13 @@ class Cart
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, CartItem>
+     */
+    public function getArticle(): Collection
+    {
+        return $this->Article;
     }
 }

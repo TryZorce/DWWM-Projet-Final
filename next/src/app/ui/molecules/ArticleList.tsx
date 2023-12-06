@@ -49,13 +49,15 @@ const ArticlesPage: React.FC = () => {
 
   return (
     <div className="article-list-container">
-      <p>Liste des Articles</p>
+      <h2 className='article'>Liste des Articles : </h2>
       <div className="article-list">
         {articles.map((article) => (
           <div key={article.id} className="article-item">
             <Link href={`/article/${article.id}`}>
               <div className='list-center'>
+                <div className='article-image-container'>
                 <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="image" />
+                </div>
                 <p className='article-name'>{article.name}</p>
                 <p>{article.price} €</p>
               </div>

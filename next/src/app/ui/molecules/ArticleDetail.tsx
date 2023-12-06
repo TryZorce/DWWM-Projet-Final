@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../../AppContext'; // Assurez-vous d'avoir le bon chemin vers votre AppContext
 import Link from 'next/link';
 import "./ArticleDetail.scss"
+import ArticleList from './ArticleList';
+import ArticlesCarrousel from './ArticleCarrousel';
 
 interface Article {
   id: number;
@@ -87,6 +89,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   }
 
   return (
+    <div className='articledetail'>
     <div className="article-container">
       <div className='image-wrapper'>
       <img
@@ -97,7 +100,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
       </div>
       <div className='article-wrapper'>
       <h1 className='article-name'>{article.name}</h1>
-      <p className="article-description">Description :</p>
+      <p className="article-description-title">Description :</p>
       <p className="article-description">{article.description}</p>
       <div className='article-container2'>
         <p className="article-price">Prix : {article.price} €</p>
@@ -126,10 +129,13 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
       <button className="login-button">Se connecter</button>
     </Link>
   )
-)}
+  )}
       </div>
     </div>
+  <ArticlesCarrousel/>
+  </div>
   );
+
 };
 
 export default ArticlePage;

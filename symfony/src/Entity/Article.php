@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
-#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact'])]
 class Article
 {
     #[ORM\Id]
@@ -43,10 +42,14 @@ class Article
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Image = null;
 
+    #[ORM\OneToMany(mappedBy: 'Article', targetEntity: CartItem::class)]
+    private Collection $Cart;
+
     public function __construct()
     {
         $this->category_id = new ArrayCollection();
         $this->cart_id = new ArrayCollection();
+        $this->Cart = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +161,36 @@ class Article
     public function setImage(?string $Image): static
     {
         $this->Image = $Image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartItem>
+     */
+    public function getCart(): Collection
+    {
+        return $this->Cart;
+    }
+
+    public function addCart(CartItem $cart): static
+    {
+        if (!$this->Cart->contains($cart)) {
+            $this->Cart->add($cart);
+            $cart->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(CartItem $cart): static
+    {
+        if ($this->Cart->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getArticle() === $this) {
+                $cart->setArticle(null);
+            }
+        }
 
         return $this;
     }

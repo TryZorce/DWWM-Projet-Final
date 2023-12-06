@@ -13,9 +13,6 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
         $category1 = $this->getReference('category_0');
         $category2 = $this->getReference('category_1');
 
-        $cart1 = $this->getReference('cart_0');
-        $cart2 = $this->getReference('cart_1');
-
         $articleData = [
             [
                 'Name' => 'Article 1',
@@ -87,9 +84,6 @@ class ArticleFixtures extends AbstractFixtures implements DependentFixtureInterf
 
             $category1->addArticle($article);
             $category2->addArticle($article);
-
-            $cart1->addArticle($article);
-            $cart2->addArticle($article);
 
             $manager->persist($article);
         }

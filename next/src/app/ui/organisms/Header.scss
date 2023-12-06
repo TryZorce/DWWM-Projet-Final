@@ -1,10 +1,10 @@
-// Header.scss
+/* Header.scss */
 
 @import '../../../theme/variables';
 
 /* Styles for the header */
 .header {
-  position: fixed; /* Set the position to fixed to keep it at the top */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 /* Styles for the content within the header */
@@ -26,25 +26,25 @@
 
 /* Styles for the left side of the header */
 .header-left {
-  margin-right: 20px;
+  margin-right: auto; /* Move the logo to the center */
 }
 
 /* Styles for the right side of the header */
 .header-right {
   display: flex;
   align-items: center;
-  margin-left: auto; /* Move the right side to the right edge */
+  margin-left: auto;
   margin-right: 20px;
 
   /* Adjust the margin between icons */
   a:not(:last-child) {
-    margin-right: 30px; /* Increase the spacing between icons to 30px */
+    margin-right: 30px;
   }
 }
 
 /* Media Queries for small screens (e.g., smartphones) */
 @media (max-width: 768px) {
   .header-right {
-    display: none; /* Hide only the header-right on smaller screens */
+    display: none;
   }
 }
