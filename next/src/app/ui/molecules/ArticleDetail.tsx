@@ -3,7 +3,6 @@ import { AppContext } from '../../AppContext'; // Assurez-vous d'avoir le bon ch
 import Link from 'next/link';
 import "./ArticleDetail.scss"
 import ArticleList from './ArticleList';
-import ArticlesCarrousel from './ArticleCarrousel';
 
 interface Article {
   id: number;
@@ -132,7 +131,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   )}
       </div>
     </div>
-  <ArticlesCarrousel/>
+  <ArticleList/>
   </div>
   );
 

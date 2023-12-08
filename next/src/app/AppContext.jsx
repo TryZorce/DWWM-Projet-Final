@@ -13,9 +13,9 @@ export default function AppContextProvider({ children }) {
 
   console.log('hello')
 
-  const localStoredToken = localStorage.getItem('token')
-
+  
   useEffect(() => {
+    const localStoredToken = window.localStorage.getItem('token')
     if (localStoredToken) {
       try {
         const decodedToken = jwtDecode(localStoredToken)

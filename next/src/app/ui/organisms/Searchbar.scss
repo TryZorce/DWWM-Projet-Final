@@ -11,7 +11,7 @@
 
   .searchbar-article-item {
     width: 30%;
-    margin: 22px;
+    margin: 8px;
     margin-bottom: 16px;
     padding: 16px;
     border: 1px solid #ddd;
@@ -26,7 +26,7 @@
 
   @media (max-width: 768px) {
     .searchbar-article-item {
-      width: 48%;
+      width: 30%;
       margin: 8px;
       margin-bottom: 8px;
     }
@@ -77,4 +77,8 @@ input {
   background-color: $white;
   color: $primary;
   border: 2px solid $gray;
+}
+
+.name-wrapper{
+  height: 50px;
 }

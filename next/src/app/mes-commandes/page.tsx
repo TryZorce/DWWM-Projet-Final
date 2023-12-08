@@ -19,8 +19,6 @@ const MesCommandes: React.FC = () => {
         if (token) {
           const decodedToken: any = jwtDecode(token);
           const userEmail = decodedToken.username;
-
-          // Fetch pour obtenir l'ID de l'utilisateur
           const userResponse = await fetch(`http://127.0.0.1:8000/api/users?page=1&email=${userEmail}`, {
             method: 'GET',
             headers: {
@@ -35,7 +33,6 @@ const MesCommandes: React.FC = () => {
           const userData = await userResponse.json();
           const userId = userData['hydra:member'][0]?.id;
 
-          // Fetch pour obtenir les commandes de l'utilisateur
           const ordersResponse = await fetch(`http://127.0.0.1:8000/api/carts?page=1&user=${userId}`, {
             method: 'GET',
             headers: {

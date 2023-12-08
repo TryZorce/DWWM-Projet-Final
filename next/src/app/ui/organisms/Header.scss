@@ -26,7 +26,12 @@
 
 /* Styles for the left side of the header */
 .header-left {
-  margin-right: auto; /* Move the logo to the center */
+  margin-right: auto;
+  /* Move the logo to the center */
+
+  img {
+    margin-left: 20px;
+  }
 }
 
 /* Styles for the right side of the header */
@@ -42,9 +47,27 @@
   }
 }
 
+
 /* Media Queries for small screens (e.g., smartphones) */
 @media (max-width: 768px) {
   .header-right {
     display: none;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-left{
+
+    margin: 0px;
   }
 }

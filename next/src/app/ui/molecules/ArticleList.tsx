@@ -28,7 +28,7 @@ const ArticlesPage: React.FC = () => {
         setLoading(false);
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message); // Ensure that 'error' is of type string
+          setError(err.message); // Ensure that 'error' is of type stringscreen
         } else {
           setError('Une erreur inconnue s\'est produite.');
         }
@@ -50,20 +50,22 @@ const ArticlesPage: React.FC = () => {
   return (
     <div className="article-list-container">
       <h2 className='article'>Liste des Articles : </h2>
-      <div className="article-list">
-        {articles.map((article) => (
-          <div key={article.id} className="article-item">
-            <Link href={`/article/${article.id}`}>
-              <div className='list-center'>
-                <div className='article-image-container'>
-                <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="image" />
+      <div className='test'>
+        <div className="article-list">
+          {articles.map((article) => (
+            <div key={article.id} className="article-item">
+              <Link href={`/article/${article.id}`}>
+                <div className='list-center'>
+                  <div className='article-image-container'>
+                    <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="image" />
+                  </div>
+                  <p className='article-name'>{article.name}</p>
+                  <p>{article.price} €</p>
                 </div>
-                <p className='article-name'>{article.name}</p>
-                <p>{article.price} €</p>
-              </div>
-            </Link>
-          </div>
-        ))}
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

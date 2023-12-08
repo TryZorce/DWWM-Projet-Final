@@ -11,7 +11,6 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ interval = 5000 }) => {
     '/img/HeroBanner/HeroBanner1.jpg',
     '/img/HeroBanner/HeroBanner2.jpg',
     '/img/HeroBanner/HeroBanner3.jpg',
-    // Ajoute autant d'images que nécessaire
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,7 +27,6 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ interval = 5000 }) => {
 
   return (
     <div className="hero-banner">
-      <div className="overlay-text">Découvrez nos produits</div>
       <img
         src={images[currentImageIndex]}
         alt={`Slide ${currentImageIndex + 1}`}

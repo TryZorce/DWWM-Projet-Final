@@ -1,60 +1,102 @@
 @import '../../../theme/variables.scss';
 
 .category-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid $gray;
-    margin-top: 20px;
-    margin-bottom: 100px;
-}
-.loading-message,
-.error-message,
-.no-info-message {
+  background-color: $gray_light;
+  margin: 20px auto;
+  max-width: 80%;
+  padding: 20px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+
+  .loading-message,
+  .error-message,
+  .no-info-message {
     color: $gray;
     font-size: 18px;
-}
+  }
 
-.error-message {
+  .error-message {
     color: $danger;
-}
+  }
 
-.category-info {
+  h2 {
+    font-size: xx-large;
+    margin-bottom: 10px;
+  }
+
+  .category-info {
     margin-bottom: 20px;
 
     h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
-    img {
-        max-width: 100%;
-        height: auto;
+    .category-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 25%;
     }
-}
+  }
 
-.article-list {
-    list-style: none;
-    padding: 0;
-}
+  .article-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
 
-.article-item {
-    margin-bottom: 20px;
+    .article-item {
+      width: 200px;
+      height: 350px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: #F1F1F1;
+      box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.25);
+      transition: transform 0.3s ease-in-out;
+      margin: 20px;
 
+      &:hover {
+        transform: scale(1.05);
+      }
 
-    .article-image {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
+      .list-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .article-name {
+          height: 50px;
+        }
+
+        p {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 10px;
+          margin: 10px;
+        }
+
+        .article-image {
+          width: 200px;
+          height: 200px;
+          border-radius: 5% 5% 0% 0%;
+          height: auto;
+          margin-bottom: 10px;
+        }
+
+        .article-description {
+          font-size: 16px;
+          line-height: 1.5;
+        }
+
+        .article-price {
+          font-size: 18px;
+          font-weight: $bold;
+          color: $black;
+        margin: 30px;
+        }
+      }
     }
-
-    .article-description {
-        font-size: 16px;
-        line-height: 1.5;
-    }
-
-    .article-price {
-        font-size: 18px;
-        font-weight: $bold;
-        color: $black;
-    }
+  }
 }

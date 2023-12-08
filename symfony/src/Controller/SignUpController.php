@@ -33,7 +33,8 @@ class SignUpController extends AbstractController
         // Si les clés "email", "password" et "name" ne sont pas présentent dans la requête renvoie une erreur.
         if (!array_key_exists('email', $requestContent) ||
             !array_key_exists('password', $requestContent) ||
-            !array_key_exists('name', $requestContent)
+            !array_key_exists('name', $requestContent) ||
+            !array_key_exists('phone', $requestContent)
         ) {
             return new Response('Un problème technique est survenu, veuillez réessayer ultérieurement', 500);
         }
@@ -41,6 +42,7 @@ class SignUpController extends AbstractController
         $userEmail = $requestContent['email'];
         $userPassword = $requestContent['password'];
         $userName = $requestContent['name'];
+        $userPhone = $requestContent['phone'];
 
         // Vérifie que l'adresse email n'est pas déjà utilisé
         $userRepository = $this->entityManager->getRepository(User::class);
@@ -55,6 +57,7 @@ class SignUpController extends AbstractController
         $newUser = new User();
         $newUser->setEmail($userEmail);
         $newUser->setName($userName);
+        $newUser->setPhone($userPhone);
         $newUser->setPassword($this->passwordHasher->hashPassword($newUser, $userPassword));
         $this->entityManager->persist($newUser);
         $this->entityManager->flush();

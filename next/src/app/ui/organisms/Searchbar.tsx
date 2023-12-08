@@ -68,7 +68,7 @@ const SearchBar: React.FC = () => {
             <div key={article.id} className="searchbar-article-item">
               <Link href={`/article/${article.id}`}>
                 <div className="searchbar-list-center">
-                  <p>{article.name}</p>
+                  <p className='name-wrapper'>{article.name}</p>
                   <img
                     src={`http://127.0.0.1:8000/images/${article.image}`}
                     alt={article.name}

@@ -16,7 +16,7 @@
   .article-list {
     display: flex;
     align-items: center;
-    justify-content:flex-start;
+    justify-content:center;
     flex-wrap: wrap;
     gap: 20px;
     
@@ -46,7 +46,7 @@
         }
         p {
           display: block;
-          font-weight: bold;
+          font-weight: 500;
           margin-bottom: 10px;
           margin: 10px;
         }
@@ -70,4 +70,11 @@
 .article{
   font-size:xx-large;
   margin-bottom: 10px;
+  font-weight: 300;
+  text-decoration: underline;
+}
+
+.test{
+  display:flex ;
+  justify-content:center ;
 }
