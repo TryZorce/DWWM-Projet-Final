@@ -73,8 +73,12 @@ const MesCommandes: React.FC = () => {
 
         const fetchedArticles = await Promise.all(articlesPromises);
         setFetchedArticles(fetchedArticles);
-      } catch (error) {
-        console.error('Error fetching user orders:', error.message);
+      } catch (error: any) {
+        if (error instanceof Error) {
+          console.error('Error fetching user orders:', error.message);
+        } else {
+          console.error('Non-Error type error:', error);
+        }
         setError('Error fetching user orders');
         setLoading(false);
       }
@@ -94,29 +98,34 @@ const MesCommandes: React.FC = () => {
   return (
     <>
       <Header />
-      <div className='commande-container'>
-        <div className='container'>
-          <div className='title'>Mes Commandes</div>
-
-          {orders.map((order: any, index: number) => (
-            <div key={order.id} className='order-container'>
-              <div className='order-info'>Commande N°{order.id}</div>
-
-              <ul className='articles-list'>
-                {fetchedArticles[index]?.map((currentArticle: any, articleIndex: number) => (
-                  <li key={articleIndex} className='article-item'>
-                    <div className='article-info'>
-                      <p>{currentArticle?.name}</p>
-                      <p>{currentArticle?.price}</p>
-                      <img src={`http://127.0.0.1:8000/images/${currentArticle?.image}`} alt={currentArticle?.name} />
-                    </div>
-                  </li>
-                ))}
-              </ul>
+      <div className='mes-commandes-container'>
+        <div className='mes-commandes-content'>
+          <div className='mes-commandes-title'>Mes Commandes</div>
+          <div className='mes-commandes-list-container'>
+            <div className='mes-commandes-list'>
+              {orders.map((order: any, index: number) => (
+                <div key={order.id} className='mes-commandes-order-container'>
+                  <div className='mes-commandes-order-info'>Commande N°{order.id}</div>
+                  <ul className='mes-commandes-articles-list'>
+                    {fetchedArticles[index]?.map((currentArticle: any, articleIndex: number) => (
+                      <li key={articleIndex} className='mes-commandes-article-item'>
+                        <div className='mes-commandes-list-center'>
+                          <p className='mes-commandes-article-name'>{currentArticle?.name}</p>
+                          <p>{currentArticle?.price}</p>
+                          <img
+                            className='mes-commandes-image'
+                            src={`http://127.0.0.1:8000/images/${currentArticle?.image}`}
+                            alt={currentArticle?.name}
+                          />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
-          ))}
-
-          <Link href='/user'>Retour au profil</Link>
+          </div>
+          <Link className='mes-commandes-link' href='/user'>Retour au profil</Link>
         </div>
       </div>
       <Footer />
