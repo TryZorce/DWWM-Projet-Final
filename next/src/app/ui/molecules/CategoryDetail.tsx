@@ -1,6 +1,6 @@
 // Import necessary dependencies
-import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import './CategoryDetail.scss'; // Import your SCSS file
 
 // Define the Article interface
@@ -17,7 +17,7 @@ interface Category {
   categoryId: number;
   categoryname: string;
   image: string;
-  articles: string[]; // Assuming articles are represented as URLs
+  articles: string[];
 }
 
 const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
@@ -27,49 +27,40 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchCategoryPages = async () => {
+    const fetchCategoryPage = async () => {
       try {
         if (!categoryId) {
           throw new Error("L'identifiant de la catégorie est manquant.");
         }
 
-        const response = await fetch(`http://localhost:8000/api/categories/${categoryId}`);
-
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP : ${response.status}`);
+        // Fetch category details
+        const categoryResponse = await fetch(`http://localhost:8000/api/categories/${categoryId}`);
+        if (!categoryResponse.ok) {
+          throw new Error(`Erreur HTTP : ${categoryResponse.status}`);
         }
+        const categoryData: Category = await categoryResponse.json();
+        setCategoryInfo(categoryData);
 
-        const data: Category = await response.json();
-        setCategoryInfo(data);
-
-        if (data.articles && Array.isArray(data.articles)) {
-          const articlesData = await Promise.all<Article>(
-            data.articles.map(async (articleUrl: string) => {
+        // Fetch article details
+        if (categoryData.articles && Array.isArray(categoryData.articles)) {
+          const articlePromises = categoryData.articles.map(async (articleUrl: string) => {
+            try {
               const fullArticleUrl = `http://localhost:8000${articleUrl}`;
+              const articleResponse = await fetch(fullArticleUrl);
 
-              try {
-                const articleResponse = await fetch(fullArticleUrl);
-
-                if (!articleResponse.ok) {
-                  throw new Error(`Erreur HTTP pour l'article : ${articleResponse.status}`);
-                }
-
-                const articleData = await articleResponse.json();
-                if (typeof articleData === 'object' && 'id' in articleData) {
-                  return articleData as Article;
-                } else {
-                  throw new Error('Format de données d\'article invalide.');
-                }
-              } catch (articleError) {
-                if (articleError instanceof Error) {
-                  throw new Error(`Erreur lors de la récupération de l'article : ${articleError.message}`);
-                } else {
-                  throw new Error('Erreur inconnue lors de la récupération de l\'article.');
-                }
+              if (!articleResponse.ok) {
+                throw new Error(`Erreur HTTP pour l'article : ${articleResponse.status}`);
               }
-            })
-          );
 
+              const articleData: Article = await articleResponse.json();
+              return articleData;
+            } catch (articleError) {
+              throw new Error(`Erreur lors de la récupération de l'article : ${articleError.message}`);
+            }
+          });
+
+          // Wait for all article requests to complete
+          const articlesData = await Promise.all(articlePromises);
           setArticles(articlesData);
         }
       } catch (error) {
@@ -83,7 +74,7 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
       }
     };
 
-    fetchCategoryPages();
+    fetchCategoryPage();
   }, [categoryId]);
 
   if (loading) {
@@ -100,23 +91,26 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
 
   return (
     <div className="category-container">
-      <h3>Liste d'articles</h3>
+      <h2>Liste d'articles pour {categoryInfo.categoryname}</h2>
       <div className="category-info">
         <h2>{categoryInfo.categoryname}</h2>
-        <img src={categoryInfo.image} alt={categoryInfo.categoryname} />
+        <img src={`http://localhost:8000/images/${categoryInfo.image}`} alt={categoryInfo.categoryname} className='category-image'/>
       </div>
-      <ul className="article-list">
+      <div className="article-list">
         {articles.map((article) => (
-          <Link href={`/article/${article.id}`}>
-          <li key={article.id} className="article-item">
-            <h4>{article.name}</h4>
-            <img src={`http://127.0.0.1:8000/images/${article.image}`} alt={article.name} className="article-image" />
-            <p className="article-description">Description : {article.description}</p>
-            <p className="article-price">Prix : {article.price.toFixed(2)} €</p>
-          </li>
+          <Link href={`/article/${article.id}`} key={article.id}>
+            <div className="article-item">
+              <div className='list-center'>
+                <div className='article-image-container'>
+                  <img src={`http://localhost:8000/images/${article.image}`} alt={article.name} className="article-image" />
+                </div>
+                <p className='article-name'>{article.name}</p>
+                <p className="article-price">Prix : {article.price.toFixed(2)} €</p>
+              </div>
+            </div>
           </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
