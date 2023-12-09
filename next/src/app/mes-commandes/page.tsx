@@ -10,7 +10,7 @@ const MesCommandes: React.FC = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [articles, setArticles] = useState<any[]>([]);
+  const [fetchedArticles, setFetchedArticles] = useState<any[][]>([]);
 
   useEffect(() => {
     const fetchUserOrders = async () => {
@@ -72,9 +72,7 @@ const MesCommandes: React.FC = () => {
         });
 
         const fetchedArticles = await Promise.all(articlesPromises);
-        // Flatten the array of arrays into a single array of articles
-        const flattenedArticles = fetchedArticles.flat();
-        setArticles(flattenedArticles);
+        setFetchedArticles(fetchedArticles);
       } catch (error) {
         console.error('Error fetching user orders:', error.message);
         setError('Error fetching user orders');
@@ -105,23 +103,18 @@ const MesCommandes: React.FC = () => {
               <div className='order-info'>Commande N°{order.id}</div>
 
               <ul className='articles-list'>
-                {order.articles.map((_articleLink: string, articleIndex: number) => {
-                  const currentArticle = articles[index] && articles[index][articleIndex];
-
-                  return (
-                    <li key={articleIndex} className='article-item'>
-                      <div className='article-info'>
-                        <p>{currentArticle?.name}</p>
-                        <p>{currentArticle?.price}</p>
-                        <p>{currentArticle?.image}</p>
-                      </div>
-                    </li>
-                  );
-                })}
+                {fetchedArticles[index]?.map((currentArticle: any, articleIndex: number) => (
+                  <li key={articleIndex} className='article-item'>
+                    <div className='article-info'>
+                      <p>{currentArticle?.name}</p>
+                      <p>{currentArticle?.price}</p>
+                      <img src={`http://127.0.0.1:8000/images/${currentArticle?.image}`} alt={currentArticle?.name} />
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
-
 
           <Link href='/user'>Retour au profil</Link>
         </div>
