@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartItemRepository::class)]
-#[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact'])]
 class CartItem
 {

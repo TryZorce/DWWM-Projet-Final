@@ -1,3 +1,86 @@
-.commande-container{
-    margin-top: 100px;
+@import '../../theme/variables.scss';
+
+.commande-container {
+  background-color: $secondary_light;
+  color: $black;
+  margin-top: 100px;
+
+  .header {
+    background-color: $white;
+    padding: 20px;
+  }
+
+  .container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .title {
+      color: $primary;
+      font-size: $font_size_h1;
+      margin-bottom: 20px;
+    }
+
+    .orders-list {
+      list-style: none;
+      padding: 0;
+
+      .order-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid $gray_light;
+        border-radius: 5px;
+      }
+    }
+
+    .link {
+      color: $primary_focus;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer {
+    background-color: $white;
+    padding: 20px;
+  }
+
+  .loading-error {
+    color: $danger;
+    font-size: $font_size_h3;
+    text-align: center;
+  }
+
+  @media screen and (max-width: $md) {
+    .container {
+      padding: 15px;
+
+      .title {
+        font-size: $font_size_h2;
+      }
+
+      .order-item {
+        padding: 8px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $sm) {
+    .container {
+      padding: 10px;
+
+      .title {
+        font-size: $font_size_h3;
+      }
+
+      .order-item {
+        padding: 5px;
+      }
+    }
+  }
 }
