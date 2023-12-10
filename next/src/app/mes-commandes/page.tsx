@@ -108,10 +108,11 @@ const MesCommandes: React.FC = () => {
                   <div className='mes-commandes-order-info'>Commande N°{order.id}</div>
                   <ul className='mes-commandes-articles-list'>
                     {fetchedArticles[index]?.map((currentArticle: any, articleIndex: number) => (
+                          <Link href={`/article/${currentArticle.id}`}>
                       <li key={articleIndex} className='mes-commandes-article-item'>
                         <div className='mes-commandes-list-center'>
                           <p className='mes-commandes-article-name'>{currentArticle?.name}</p>
-                          <p>{currentArticle?.price}</p>
+                          <p>{currentArticle?.price} €</p>
                           <img
                             className='mes-commandes-image'
                             src={`http://127.0.0.1:8000/images/${currentArticle?.image}`}
@@ -119,6 +120,7 @@ const MesCommandes: React.FC = () => {
                           />
                         </div>
                       </li>
+                        </Link>
                     ))}
                   </ul>
                 </div>

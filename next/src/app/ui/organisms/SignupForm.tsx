@@ -19,8 +19,9 @@ const SignupForm: React.FC = () => {
 
   const [user, setUser] = useState<User>(initialUser);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<boolean>(false);
+  const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
 
   const emailRegex = /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -28,22 +29,28 @@ const SignupForm: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
 
     if (name === 'email' && !emailRegex.test(value)) {
-      setError('Veuillez entrer une adresse email valide.');
+      setErrors((prevErrors) => ({ ...prevErrors, email: 'Veuillez entrer une adresse email valide.' }));
     } else if (name === 'password' && !passwordRegex.test(value)) {
-      setError('Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.');
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.',
+      }));
     } else if (name === 'phone' && !/^\d{10}$/.test(value)) {
-      setError('Le numéro de téléphone doit contenir exactement 10 chiffres.');
-    } else {
-      setError(null);
+      setErrors((prevErrors) => ({ ...prevErrors, phone: 'Le numéro de téléphone doit contenir 10 chiffres.' }));
     }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!validateForm() || !acceptedTerms) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        acceptedTerms: !acceptedTerms ? 'Veuillez accepter les conditions générales d\'utilisation.' : '',
+      }));
       return;
     }
 
@@ -62,15 +69,15 @@ const SignupForm: React.FC = () => {
         const responseData = await response.json();
         setSuccess(true);
         setUser(initialUser);
-        setError(null);
+        setErrors({});
         localStorage.setItem('token', responseData.token);
       } else {
         const errorData = await response.json();
-        setError(errorData.message || 'Erreur lors de l\'inscription');
+        setErrors({ general: errorData.message || 'Erreur lors de l\'inscription' });
       }
     } catch (error) {
       console.error('Erreur lors de l\'inscription', error);
-      setError('Erreur lors de l\'inscription');
+      setErrors({ general: 'Erreur lors de l\'inscription' });
     } finally {
       setLoading(false);
     }
@@ -78,57 +85,73 @@ const SignupForm: React.FC = () => {
 
   const validateForm = () => {
     const { name, email, password, phone } = user;
+    const newErrors: Record<string, string> = {};
 
-    if (!name || !email || !password || !phone) {
-      setError('Veuillez remplir tous les champs.');
-      return false;
+    if (!name) {
+      newErrors.name = 'Veuillez entrer votre nom.';
     }
 
-    if (!emailRegex.test(email)) {
-      setError('Veuillez entrer une adresse email valide.');
-      return false;
+    if (!email) {
+      newErrors.email = 'Veuillez entrer votre adresse email.';
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = 'Veuillez entrer une adresse email valide.';
     }
 
-    if (!passwordRegex.test(password)) {
-      setError('Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.');
-      return false;
+    if (!password) {
+      newErrors.password = 'Veuillez entrer votre mot de passe.';
+    } else if (!passwordRegex.test(password)) {
+      newErrors.password = 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre, et un caractère spécial.';
     }
 
-    if (!/^\d{10}$/.test(phone)) {
-      setError('Le numéro de téléphone doit contenir exactement 10 chiffres.');
-      return false;
+    if (!phone) {
+      newErrors.phone = 'Veuillez entrer votre numéro de téléphone.';
+    } else if (!/^\d{10}$/.test(phone)) {
+      newErrors.phone = 'Le numéro de téléphone doit contenir exactement 10 chiffres.';
     }
 
-    setError(null);
-    return true;
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
   };
 
   return (
     <div className='background-login'>
       <div className='register-form'>
         <h1 className='register-title'>Inscription :</h1>
-        {error && <p className='error-message'>{error}</p>}
-        {success && <p className='success-message'>Inscription réussie !</p>}
         <form onSubmit={handleSubmit}>
           <label>
             Full Name:
             <input type="text" name="name" value={user.name} onChange={handleChange} />
+            {errors.name && <p className='error-message'>{errors.name}</p>}
           </label>
           <label>
             Email:
             <input type="email" name="email" value={user.email} onChange={handleChange} />
+            {errors.email && <p className='error-message'>{errors.email}</p>}
           </label>
           <label>
             Phone:
             <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
+            {errors.phone && <p className='error-message'>{errors.phone}</p>}
           </label>
           <label>
             Password:
             <input type="password" name="password" value={user.password} onChange={handleChange} />
+            {errors.password && <p className='error-message'>{errors.password}</p>}
           </label>
-          <button type="submit" disabled={loading}>
-            {loading ? 'En cours...' : 'S\'inscrire'}
-          </button>
+          <label className='checkbox'>
+            <input type="checkbox" name="acceptedTerms" checked={acceptedTerms} onChange={() => setAcceptedTerms(!acceptedTerms)} />
+            <span>
+              J'accepte les <Link href="/conditions">conditions générales d'utilisation</Link>
+            </span>
+          </label>
+          {errors.acceptedTerms && <p className='error-message'>{errors.acceptedTerms}</p>}
+          {errors.general && <p className='error-message'>{errors.general}</p>}
+          <div className='button-container'>
+            <button type="submit" disabled={!acceptedTerms || loading}>
+              {loading ? 'En cours...' : 'S\'inscrire'}
+            </button>
+          </div>
         </form>
         <div className='auth-links-container'>
           <Link href="/user/login">

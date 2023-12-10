@@ -1,0 +1,57 @@
+@import '../../theme/variables.scss';
+
+.conditions-container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 20px;
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    section {
+      margin-bottom: 30px;
+  
+      h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+  
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+  
+      ul {
+        margin-top: 10px;
+        margin-bottom: 0;
+  
+        li {
+          margin-bottom: 8px;
+          list-style-type: disc;
+        }
+      }
+    }
+  }
+  
+  .back-to-registration {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 150px;
+  
+    a {
+      text-decoration: none;
+      background-color: $primary;
+      padding: 20px;
+      border-radius: 25px;
+      color: $white;
+      font-weight: bold;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
