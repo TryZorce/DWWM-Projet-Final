@@ -1,14 +1,14 @@
 // HeroBanner.tsx
 import React, { useState, useEffect } from 'react';
-import './HeroBanner.scss'; // Style du composant
+import './HeroBanner.scss'; 
 
 interface HeroBannerProps {
-  interval?: number; // Intervalle de défilement en millisecondes
+  interval?: number; 
 }
 
 const HeroBanner: React.FC<HeroBannerProps> = ({ interval = 5000 }) => {
   const images = [
-    '/img/HeroBanner/HeroBanner1.jpg',
+    '/img/HeroBanner/HeroBanner1.jpg ',
     '/img/HeroBanner/HeroBanner2.jpg',
     '/img/HeroBanner/HeroBanner3.jpg',
   ];

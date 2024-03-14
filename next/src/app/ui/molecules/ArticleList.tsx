@@ -1,4 +1,3 @@
-// Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import './ArticleList.scss';
@@ -28,7 +27,7 @@ const ArticlesPage: React.FC = () => {
         setLoading(false);
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message); // Ensure that 'error' is of type stringscreen
+          setError(err.message);
         } else {
           setError('Une erreur inconnue s\'est produite.');
         }

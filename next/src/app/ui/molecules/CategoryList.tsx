@@ -50,7 +50,7 @@ const CategoryList: React.FC = () => {
             <Link href={`/category/${category.id}`}>
               <div className='list-center'>
                 <p>{category.categoryname}</p>
-                <img src={`http://127.0.0.1:8000/images/${category.image}`} className="image" />
+                <img src={`http://127.0.0.1:8000/images/${category.image}`} className="image" alt={category.categoryname} />
               </div>
             </Link>
           </div>

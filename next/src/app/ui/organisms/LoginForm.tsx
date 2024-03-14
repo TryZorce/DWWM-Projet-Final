@@ -14,7 +14,6 @@ const Login = () => {
       setLoading(true);
       setError('');
 
-      // Validation des entrées (exemple : vérification que les champs ne sont pas vides)
       if (!username || !password) {
         setError('Veuillez saisir le nom d\'utilisateur et le mot de passe.');
         return;
@@ -32,10 +31,8 @@ const Login = () => {
         const data = await response.json();
         console.log(data);
 
-        // Mettre le token dans le localStorage
         localStorage.setItem('token', data.token);
 
-        // Rediriger l'utilisateur vers la page appropriée après la connexion réussie
         window.location.href = '/user';
       } else {
         setError('Identifiants incorrects. Veuillez réessayer.');

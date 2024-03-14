@@ -1,7 +1,5 @@
-// Import variables from the theme
 @import '../../../theme/variables.scss';
 
-// Base container styles
 .articledetail {
   display: flex;
   align-items: center;
@@ -17,8 +15,10 @@
   margin: 20px;
   padding: 20px;
   border: 1px solid white;
-  
-  &.loading-message, &.error-message, &.no-article-message {
+
+  &.loading-message,
+  &.error-message,
+  &.no-article-message {
     color: $message_info;
     font-size: 18px;
   }
@@ -31,7 +31,6 @@
     margin: 20px;
   }
 
-  // Article image styles
   .article-image {
     display: flex;
     width: 400px;
@@ -46,26 +45,23 @@
     justify-content: center;
   }
 
-  // Article name styles
   .article-name {
     margin-bottom: 10px;
-    font-size:xx-large;
+    font-size: xx-large;
   }
 
-  // Article description styles
-
-  .article-description-title{
+  .article-description-title {
     font-size: x-large;
     line-height: 1.5;
     margin-bottom: 10px;
   }
+
   .article-description {
     font-size: 16px;
     line-height: 1.5;
     margin-bottom: 10px;
   }
 
-  // Container for price and stock information
   .article-container2 {
     display: flex;
     flex-direction: row;
@@ -74,14 +70,12 @@
     font-weight: bold;
     margin-bottom: 20px;
 
-    // Margin for stock information
     .article-stock {
       margin-left: 10px;
       margin-right: 10px;
     }
   }
 
-  // Quantity select styles
   .quantity-select {
     width: 50px;
     padding: 5px;
@@ -90,7 +84,6 @@
     color: $black;
   }
 
-  // Add to cart button styles
   .add-to-cart-button {
     background-color: $primary;
     color: #fff;
@@ -99,13 +92,11 @@
     border: none;
     cursor: pointer;
 
-    // Hover effect
     &:hover {
       background-color: $primary_light;
     }
   }
 
-  // Login button styles
   .login-button {
     background-color: $primary;
     color: #fff;
@@ -114,15 +105,46 @@
     border: none;
     cursor: pointer;
 
-    // Hover effect
     &:hover {
       background-color: $primary_light;
     }
   }
 
-  // Media query for screens below 770px
   @media (max-width: 770px) {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+.pop-up-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.pop-up {
+  background-color: $primary;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  animation: fade-in 0.5s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

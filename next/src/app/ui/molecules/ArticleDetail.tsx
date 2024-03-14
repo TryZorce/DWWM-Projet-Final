@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AppContext } from '../../AppContext'; // Assurez-vous d'avoir le bon chemin vers votre AppContext
+import { AppContext } from '../../AppContext';
 import Link from 'next/link';
-import "./ArticleDetail.scss"
+import './ArticleDetail.scss';
 import ArticleList from './ArticleList';
 
 interface Article {
@@ -19,6 +19,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [showAddedToCartMessage, setShowAddedToCartMessage] = useState(false);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -55,7 +56,7 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   };
 
   const addToCart = () => {
-    if (article && article.stock > 0 && quantity > 0) {
+    if (article && article.stock !== undefined && article.stock > 0 && quantity > 0) {
       const updatedCart = JSON.parse(localStorage.getItem('cart') || '[]');
       const existingItemIndex = updatedCart.findIndex((item: Article) => item.id === article.id);
 
@@ -67,7 +68,12 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
 
       localStorage.setItem('cart', JSON.stringify(updatedCart));
 
-      console.log(`Article added to the cart: ${article.name}, Quantity: ${quantity}`);
+      setShowAddedToCartMessage(true);
+
+      console.log(`Article ajouté au panier : ${article.name}, Quantité : ${quantity}`);
+      setTimeout(() => {
+        setShowAddedToCartMessage(false);
+      }, 2000);
     } else if (quantity <= 0) {
       console.error("La quantité doit être supérieure à zéro.");
     } else {
@@ -88,53 +94,62 @@ const ArticlePage: React.FC<{ id: number }> = ({ id }) => {
   }
 
   return (
-    <div className='articledetail'>
-    <div className="article-container">
-      <div className='image-wrapper'>
-      <img
-        src={`http://127.0.0.1:8000/images/${article.image}`}
-        alt={article.name}
-        className="article-image"
-      />
-      </div>
-      <div className='article-wrapper'>
-      <h1 className='article-name'>{article.name}</h1>
-      <p className="article-description-title">Description :</p>
-      <p className="article-description">{article.description}</p>
-      <div className='article-container2'>
-        <p className="article-price">Prix : {article.price} €</p>
-        <p className="article-stock">Stock : {article.stock === 0 ? 'Hors Stock' : article.stock}</p>
-      {article.stock > 0 ? (
-        <p>
-          Quantité :
-          <select value={quantity} onChange={handleQuantityChange} className="quantity-select">
-            {Array.from({ length: article.stock }, (_, index) => index + 1).map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </p>
-      ) : null}
+    <div className="articledetail">
+      <div className="pop-up-container">
+        {showAddedToCartMessage && (
+          <div className="pop-up">
+            <p className="added-to-cart-message">Article ajouté au panier!</p>
+          </div>
+        )}
       </div>
 
-      {authenticatedUser && article.stock > 0 ? (
-  <button onClick={addToCart} className="add-to-cart-button">
-    Ajouter au panier
-  </button>
-) : (
-  !authenticatedUser && (
-    <Link href="/user/login">
-      <button className="login-button">Se connecter</button>
-    </Link>
-  )
-  )}
+      <div className="article-container">
+        <div className="image-wrapper">
+          <img
+            src={`http://127.0.0.1:8000/images/${article.image}`}
+            alt={article.name}
+            className="article-image"
+          />
+        </div>
+        <div className="article-wrapper">
+          <h1 className="article-name">{article.name}</h1>
+          <p className="article-description-title">Description :</p>
+          <p className="article-description">{article.description}</p>
+          <div className="article-container2">
+            <p className="article-price">Prix : {article.price} €</p>
+            <p className="article-stock">
+              Stock : {article.stock === 0 ? 'Hors Stock' : article.stock}
+            </p>
+            {article.stock && article.stock > 0 && (
+              <p>
+                Quantité :
+                <select value={quantity} onChange={handleQuantityChange} className="quantity-select">
+                  {Array.from({ length: article.stock }, (_, index) => index + 1).map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </p>
+            )}
+          </div>
+
+          {authenticatedUser && article.stock && article.stock > 0 ? (
+            <button onClick={addToCart} className="add-to-cart-button">
+              Ajouter au panier
+            </button>
+          ) : (
+            !authenticatedUser && (
+              <Link href="/user/login">
+                <button className="login-button">Se connecter</button>
+              </Link>
+            )
+          )}
+        </div>
       </div>
+      <ArticleList />
     </div>
-  <ArticleList/>
-  </div>
   );
-
 };
 
 export default ArticlePage;

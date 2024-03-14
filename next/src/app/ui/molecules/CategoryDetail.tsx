@@ -1,9 +1,7 @@
-// Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import './CategoryDetail.scss'; // Import your SCSS file
+import './CategoryDetail.scss';
 
-// Define the Article interface
 interface Article {
   id: number;
   name: string;
@@ -12,7 +10,6 @@ interface Article {
   image: string;
 }
 
-// Define the Category interface
 interface Category {
   categoryId: number;
   categoryname: string;
@@ -33,7 +30,6 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
           throw new Error("L'identifiant de la catégorie est manquant.");
         }
 
-        // Fetch category details
         const categoryResponse = await fetch(`http://localhost:8000/api/categories/${categoryId}`);
         if (!categoryResponse.ok) {
           throw new Error(`Erreur HTTP : ${categoryResponse.status}`);
@@ -41,7 +37,6 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
         const categoryData: Category = await categoryResponse.json();
         setCategoryInfo(categoryData);
 
-        // Fetch article details
         if (categoryData.articles && Array.isArray(categoryData.articles)) {
           const articlePromises = categoryData.articles.map(async (articleUrl: string) => {
             try {
@@ -59,7 +54,6 @@ const CategoryPage: React.FC<{ categoryId: number }> = ({ categoryId }) => {
             }
           });
 
-          // Wait for all article requests to complete
           const articlesData = await Promise.all(articlePromises);
           setArticles(articlesData);
         }

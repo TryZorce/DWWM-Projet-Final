@@ -120,7 +120,7 @@ const SignupForm: React.FC = () => {
         <h1 className='register-title'>Inscription :</h1>
         <form onSubmit={handleSubmit}>
           <label>
-            Full Name:
+            Nom & Prénom : 
             <input type="text" name="name" value={user.name} onChange={handleChange} />
             {errors.name && <p className='error-message'>{errors.name}</p>}
           </label>
@@ -130,12 +130,12 @@ const SignupForm: React.FC = () => {
             {errors.email && <p className='error-message'>{errors.email}</p>}
           </label>
           <label>
-            Phone:
+            Téléphone :
             <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
             {errors.phone && <p className='error-message'>{errors.phone}</p>}
           </label>
           <label>
-            Password:
+            Mot de passe:
             <input type="password" name="password" value={user.password} onChange={handleChange} />
             {errors.password && <p className='error-message'>{errors.password}</p>}
           </label>
